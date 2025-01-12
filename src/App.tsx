@@ -1,6 +1,6 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom"; 
-import { Homepage, About, Contacts, ProductPage } from "./pages";
+import { Routes, Route } from "react-router-dom";
+import { Homepage, About, Contacts, PerfumePage } from "./pages";
 import { Header, Footer } from "./components";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
           <Route index element={<Homepage />} />
           <Route path="about" element={<About />} />
           <Route path="contacts" element={<Contacts />} />
-          <Route path="perfumes/:id" element={<ProductPage />} />
+          <Route path="perfumes/:id" element={<PerfumePage />} />
         </Routes>
       </div>
       <Footer />

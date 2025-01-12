@@ -5,6 +5,7 @@ import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 
 interface Product {
+  id: number;
   name: string;
   cost: number;
   url: string;
@@ -23,7 +24,7 @@ function Catalog() {
     const fetchProducts = async () => {
       const sheetId = "1qD8BK7B51Ye-UzCbEFE5QCQrgE5od6dyniFDtUwXJiw";
       const apiKey = "AIzaSyAeeWYFcj-knuSe2xTNT5UYyLWyzr4hVKI";
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:G?key=${apiKey}`;
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/spilled!A1:G?key=${apiKey}`;
 
       try {
         const response = await fetch(url);
@@ -31,15 +32,18 @@ function Catalog() {
 
         if (data.values) {
           const rows = data.values.slice(1);
-          const formattedProducts: Product[] = rows.map((row: string[]) => ({
-            name: row[0],
-            unit: row[1],
-            cost: parseFloat(row[2]),
-            url: row[3],
-            description: row[4],
-            descriptionKz: row[5],
-            country: row[6],
-          }));
+          const formattedProducts: Product[] = rows.map(
+            (row: string[], index: number) => ({
+              id: index + 1,
+              name: row[0],
+              unit: row[1],
+              cost: parseFloat(row[2]),
+              url: row[3],
+              description: row[4],
+              descriptionKz: row[5],
+              country: row[6],
+            })
+          );
           setProducts(formattedProducts);
         }
       } catch (error) {
@@ -70,7 +74,9 @@ function Catalog() {
       return name.split(" ")[0] + " " + name.split(" ")[1];
     }
     if (name.startsWith("Jean")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1]+ " " + name.split(" ")[2];
+      return (
+        name.split(" ")[0] + " " + name.split(" ")[1] + " " + name.split(" ")[2]
+      );
     }
     if (name.startsWith("Jo")) {
       return name.split(" ")[0] + " " + name.split(" ")[1];
@@ -85,7 +91,9 @@ function Catalog() {
       return name.split(" ")[0] + " " + name.split(" ")[1];
     }
     if (name.startsWith("Yves")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1]+ " " + name.split(" ")[2];
+      return (
+        name.split(" ")[0] + " " + name.split(" ")[1] + " " + name.split(" ")[2]
+      );
     }
     return name.split(" ")[0];
   };
@@ -119,7 +127,7 @@ function Catalog() {
       .includes(searchQuery.toLowerCase());
 
     if (selectedBrand === "Все бренды") {
-      return products;
+      return products && matchesSearchQuery;
     }
 
     return matchesBrand && matchesSearchQuery;
@@ -152,7 +160,7 @@ function Catalog() {
             placeholder="Поиск по названию..."
             value={searchQuery}
             onChange={handleSearchChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            className=" "
           />
         </div>
 
@@ -182,9 +190,7 @@ function Catalog() {
                   className="absolute top-3 right-3 cursor-pointer text-2xl"
                   onClick={() => handleFavoriteClick(product)}
                 >
-                  {favoriteProducts.some(
-                    (item) => item.name === product.name
-                  ) ? (
+                  {favoriteProducts.some((item) => item.id === product.id) ? (
                     <SolidHeartIcon className="h-7 w-7 cursor-pointer text-red-500 transition-all duration-300" />
                   ) : (
                     <OutlineHeartIcon className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500" />
