@@ -3,6 +3,13 @@ import logo from "../../assets/logoM.png";
 import Button from "../button/button";
 
 const Hero = () => {
+  const handlePerfumesLook = () => {
+    window.scrollTo({
+      top: (document.getElementById("catalog")?.offsetTop || 0) - 60,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section className="flex items-center justify-center py-[70px]">
       <Container>
@@ -13,7 +20,9 @@ const Hero = () => {
               место где ароматы <br />
               <span className="font-georg">оживляют мечты</span>
             </h1>
-            <Button className="mt-2">Посмотреть ароматы</Button>
+            <Button className="mt-2" onClick={() => handlePerfumesLook()}>
+              Посмотреть ароматы
+            </Button>
           </div>
           <div>
             <img

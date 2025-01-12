@@ -3,6 +3,9 @@ import Container from "../container/container";
 import logo from "../../assets/logoM.png";
 import { Link } from "react-router-dom";
 import LanguageSelector from "../language-selector/language-selector";
+import React from "react";
+import { VscHeart } from "react-icons/vsc";
+import { HeartIcon } from "@heroicons/react/24/outline";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,7 +28,7 @@ const Header = () => {
 
   return (
     <header
-      className={`w-full fixed h-[60px] transition-all duration-300 ${
+      className={`w-full fixed z-10 h-[60px] transition-all duration-300 ${
         isScrolled
           ? "backdrop-blur-lg bg-white bg-opacity-80"
           : "bg-transparent"
@@ -63,7 +66,11 @@ const Header = () => {
             </Link>
           </div>
 
-          <div className="flex justify-right text-right">
+          <div className="flex justify-right text-right gap-4">
+            <Link to={"/favourite"}>
+              <HeartIcon className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500" />
+            </Link>
+
             <LanguageSelector />
           </div>
         </div>

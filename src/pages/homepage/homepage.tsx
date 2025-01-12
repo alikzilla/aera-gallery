@@ -1,5 +1,4 @@
-import { Hero } from "../../components";
-import Catalog from "../../components/catalog/catalog";
+import { Hero, Catalog } from "../../components";
 
 const Homepage = () => {
   return (

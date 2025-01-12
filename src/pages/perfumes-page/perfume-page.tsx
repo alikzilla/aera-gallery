@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import './product-page.css';
+import './perfume-page.css';
 
 interface Product {
   name: string;
@@ -11,7 +11,7 @@ interface Product {
   country: string;
 }
 
-const ProductPage: React.FC = () => {
+const PerfumePage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Получаем id из URL
   const [product, setProduct] = useState<Product | null>(null);
 
@@ -69,4 +69,4 @@ const ProductPage: React.FC = () => {
   );
 };
 
-export default ProductPage;
+export default PerfumePage;
