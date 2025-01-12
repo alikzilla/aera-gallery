@@ -1,7 +1,9 @@
 import React from "react";
-import { Routes, Route } from "react-router";
-import { Homepage, About, Contacts, Favourite, Parfume } from "./pages";
+import { Routes, Route } from "react-router-dom"; 
+import { Homepage, About, Contacts, Parfume } from "./pages";
 import { Header, Footer } from "./components";
+import Catalog from "./components/catalog/catalog";
+import ProductPage from "./components/product-page/product-page";
 
 function App() {
   return (
@@ -12,9 +14,9 @@ function App() {
           <Route index element={<Homepage />} />
           <Route path="about" element={<About />} />
           <Route path="contacts" element={<Contacts />} />
-          <Route path="favourite" element={<Favourite />} />
-          {/* Dynamic route for parfumes */}
+          <Route path="catalog" element={<Catalog />} />
           <Route path="parfumes/:parfume_id" element={<Parfume />} />
+          <Route path="product/:id" element={<ProductPage />} />
         </Routes>
       </div>
       <Footer />
