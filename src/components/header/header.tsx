@@ -5,9 +5,9 @@ import LanguageSelector from "../language-selector/language-selector";
 
 const Header = () => {
   return (
-    <header className="py-5">
+    <header className="fixed w-screen h-[60px]">
       <Container>
-        <div className="flex items-center justify-between relative">
+        <div className="h-full flex items-center justify-between relative">
           <nav className="flex items-center gap-5 flex-1">
             <Link to="/" className="hover:underline">
               Главная

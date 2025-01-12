@@ -7,14 +7,16 @@ function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route index element={<Homepage />} />
-        <Route path="about" element={<About />} />
-        <Route path="contacts" element={<Contacts />} />
-        <Route path="favourite" element={<Favourite />} />
-        {/* Dynamic route for parfumes */}
-        <Route path="parfumes/:parfume_id" element={<Parfume />} />
-      </Routes>
+      <div className="pt-[60px]">
+        <Routes>
+          <Route index element={<Homepage />} />
+          <Route path="about" element={<About />} />
+          <Route path="contacts" element={<Contacts />} />
+          <Route path="favourite" element={<Favourite />} />
+          {/* Dynamic route for parfumes */}
+          <Route path="parfumes/:parfume_id" element={<Parfume />} />
+        </Routes>
+      </div>
       <Footer />
     </>
   );
