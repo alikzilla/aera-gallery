@@ -1,9 +1,11 @@
-import { useTranslation } from "react-i18next";
+import { Hero } from "../../components";
 
 const Homepage = () => {
-  const { t } = useTranslation();
-
-  return <main>Hello world {t("hello")}</main>;
+  return (
+    <main>
+      <Hero />
+    </main>
+  );
 };
 
 export default Homepage;
