@@ -1,22 +1,59 @@
+import { useState, useEffect } from "react";
 import Container from "../container/container";
 import logo from "../../assets/logoM.png";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import LanguageSelector from "../language-selector/language-selector";
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="fixed w-screen h-[60px]">
+    <header
+      className={`w-full fixed h-[60px] transition-all duration-300 ${
+        isScrolled
+          ? "backdrop-blur-lg bg-white bg-opacity-80"
+          : "bg-transparent"
+      }`}
+    >
       <Container>
         <div className="h-full flex items-center justify-between relative">
-          <nav className="flex items-center gap-5 flex-1">
-            <Link to="/" className="hover:underline">
+          <nav className="flex items-center gap-5">
+            <Link
+              to="/"
+              className="relative group hover:text-yellow-600 transition-colors"
+            >
               Главная
+              <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </Link>
-            <Link to="/about" className="hover:underline">
+            <Link
+              to="/about"
+              className="relative group hover:text-yellow-600 transition-colors"
+            >
               О нас
+              <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </Link>
-            <Link to="/contacts" className="hover:underline">
+            <Link
+              to="/contacts"
+              className="relative group hover:text-yellow-600 transition-colors"
+            >
               Контакты
+              <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </Link>
           </nav>
 

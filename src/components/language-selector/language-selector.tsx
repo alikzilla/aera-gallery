@@ -36,7 +36,7 @@ const LanguageSelector = () => {
             aria-label="usermenu-button"
           >
             <span className="flex w-full justify-between items-center">
-              <GlobeAltIcon className="h-7 w-7 cursor-pointer text-black" />
+              <GlobeAltIcon className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-yellow-600" />
             </span>
           </Menu.Button>
           <Transition

@@ -4,7 +4,7 @@ import Button from "../button/button";
 
 const Hero = () => {
   return (
-    <section className="w-screen flex items-center justify-center py-[70px]">
+    <section className="flex items-center justify-center py-[70px]">
       <Container>
         <div className="w-full flex items-center justify-between gap-10">
           <div className="flex flex-col items-start gap-1">
