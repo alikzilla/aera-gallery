@@ -61,6 +61,7 @@ const Contacts = () => {
                 to={
                   "https://2gis.kz/astana/firm/70000001076465027?m=71.425681%2C51.095228%2F16"
                 }
+                target="_blank"
               >
                 <img src={map} alt="map" className="rounded" />
               </Link>
