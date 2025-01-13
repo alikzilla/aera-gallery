@@ -36,6 +36,18 @@ const Header: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsOpen(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); 
+  
   const whatsappMessage = (products: Product[]) => {
     const phoneNumber = "87780547007";
     if (products.length === 0) {
@@ -57,6 +69,16 @@ const Header: React.FC = () => {
       finalMessage
     )}`;
     window.open(whatsappUrl, "_blank");
+  };
+
+  const handleGamburgerOpen = () => {
+    setIsOpen(!isOpen);
+    setShowFavoriteWindow(false);
+  };
+
+  const handleFavoriteWindowrOpen = () => {
+    setIsOpen(false);
+    setShowFavoriteWindow(!showFavoriteWindow);
   };
 
   return (
@@ -99,7 +121,7 @@ const Header: React.FC = () => {
             <div className="md:hidden flex items-center">
               <GiHamburgerMenu
                 className="text-black text-3xl cursor-pointer"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => handleGamburgerOpen()}
               />
             </div>
 
@@ -111,9 +133,10 @@ const Header: React.FC = () => {
                   : "translate-x-[-16px] sm:translate-x-[-32px]"
               } absolute z-5 top-full w-screen bg-white shadow-lg p-5 md:hidden transition-all duration-300 ease-in-out`}
             >
-              <nav className="flex items-center justify-center gap-3">
+              <nav className="relative flex flex-col items-center justify-center gap-3">
                 <Link
                   to="/"
+                  onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
                   Главная
@@ -121,6 +144,7 @@ const Header: React.FC = () => {
                 </Link>
                 <Link
                   to="/about"
+                  onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
                   О нас
@@ -128,6 +152,7 @@ const Header: React.FC = () => {
                 </Link>
                 <Link
                   to="/contacts"
+                  onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
                   Контакты
@@ -146,7 +171,7 @@ const Header: React.FC = () => {
               <div className="relative">
                 <HeartIcon
                   className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500"
-                  onClick={() => setShowFavoriteWindow(!showFavoriteWindow)} // Toggle favorite window
+                  onClick={() => handleFavoriteWindowrOpen()} // Toggle favorite window
                 />
               </div>
 
@@ -192,7 +217,9 @@ const Header: React.FC = () => {
                     />
                     <div>
                       <Link
-                        to={`/perfumes/${product.volume ? "original" : "spilled"}/${product.name}`}
+                        to={`/perfumes/${
+                          product.volume ? "original" : "spilled"
+                        }/${product.name}`}
                         onClick={() => setShowFavoriteWindow(false)}
                         className="font-bold relative group hover:text-yellow-600 transition-colors py-2"
                       >

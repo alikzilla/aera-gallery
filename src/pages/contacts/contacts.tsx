@@ -16,17 +16,13 @@ const Contacts = () => {
           </div>
 
           {/* Contact Wrapper */}
-          <div className="flex items-start justify-between">
+          <div className="h-[500px] lg:h-auto flex flex-col-reverse lg:flex-row items-start justify-end lg:justify-between gap-10">
             {/* Contact Details */}
-            <div>
+            <div className="md:w-[70%]">
               <div className="space-y-4">
                 <div className="contact-item">
                   <p className="text-gray-500">Контакт:</p>
-                  <h3 className="font-semibold">8 (999) 999-99-99</h3>
-                </div>
-                <div className="contact-item">
-                  <p className="text-gray-500">Контакт:</p>
-                  <h3 className="font-semibold">8 (999) 999-99-99</h3>
+                  <h3 className="font-semibold">+7 (778) 054-70-07</h3>
                 </div>
                 <div className="contact-item">
                   <p className="text-gray-500">Адрес:</p>
@@ -56,7 +52,7 @@ const Contacts = () => {
             </div>
 
             {/* Map Section */}
-            <div style={{ width: "700px", height: 400 }}>
+            <div style={{ width: "100%" }}>
               <Link
                 to={
                   "https://2gis.kz/astana/firm/70000001076465027?m=71.425681%2C51.095228%2F16"

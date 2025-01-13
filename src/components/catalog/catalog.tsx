@@ -315,13 +315,12 @@ function Catalog() {
                     <strong>Цена:</strong> {product.cost} KZT{" "}
                     {sheetname === "spilled" && "за МЛ"}
                   </p>
-                  <Link
-                    to={`/perfumes/${product.name}`}
+                  <div
                     className="relative text-yellow-600 transition-colors"
                   >
                     Нажмите чтобы посмотреть
                     <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                  </Link>
+                  </div>
                 </div>
               </Link>
             ))}

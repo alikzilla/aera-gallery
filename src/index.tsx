@@ -5,6 +5,7 @@ import "./index.css";
 import "./helpers/i18n";
 import reportWebVitals from "./helpers/reportWebVitals";
 import { HashRouter } from "react-router-dom";
+import { FavoriteProvider } from "./components/favorites/favorites";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HashRouter>
-      <App />
+      <FavoriteProvider>
+        <App />{" "}
+      </FavoriteProvider>
     </HashRouter>
   </React.StrictMode>
 );
