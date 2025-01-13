@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Container, Button, Loader } from "../";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
@@ -56,46 +56,94 @@ function Catalog() {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    window.scrollTo({
-      top: (document.getElementById("catalog")?.offsetTop || 0) - 60,
-      behavior: "smooth",
-    });
-  }, [currentPage]);
-
   const getBrandFromName = (name: string) => {
-    if (name.startsWith("Al")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1];
+    const brandPrefix = name.split(" ")[0];
+
+    switch (brandPrefix) {
+      case "Al":
+      case "By":
+      case "Ex":
+      case "Jo":
+      case "Le":
+      case "Tom":
+      case "V":
+      case "Van":
+      case "Terre":
+      case "Tiziana":
+      case "Mark":
+      case "Attar":
+      case "Mont":
+      case "Nina":
+      case "Orto":
+      case "Paco":
+      case "Thomas":
+      case "Vilhelm":
+      case "Victoria's":
+      case "CLIVE":
+      case "Armani":
+        return name.split(" ")[0] + " " + name.split(" ")[1];
+
+      case "Jean":
+        return (
+          name.split(" ")[0] +
+          " " +
+          name.split(" ")[1] +
+          " " +
+          name.split(" ")[2]
+        );
+
+      case "Yves":
+        return (
+          name.split(" ")[0] +
+          " " +
+          name.split(" ")[1] +
+          " " +
+          name.split(" ")[2]
+        );
+
+      case "Viktor":
+        return (
+          name.split(" ")[0] +
+          " " +
+          name.split(" ")[1] +
+          " " +
+          name.split(" ")[2]
+        );
+
+      case "Acqua":
+        return (
+          name.split(" ")[0] +
+          " " +
+          name.split(" ")[1] +
+          " " +
+          name.split(" ")[2]
+        );
+
+      case "Juliette":
+        return (
+          name.split(" ")[0] +
+          " " +
+          name.split(" ")[1] +
+          " " +
+          name.split(" ")[2] +
+          " " +
+          name.split(" ")[3]
+        );
+
+      case "Armaf":
+        return (
+          name.split(" ")[0] +
+          " " +
+          name.split(" ")[1] +
+          " " +
+          name.split(" ")[2] +
+          " " +
+          name.split(" ")[3]
+        );
+
+      default:
+        return name.split(" ")[0];
     }
-    if (name.startsWith("By")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1];
-    }
-    if (name.startsWith("Ex")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1];
-    }
-    if (name.startsWith("Jean")) {
-      return (
-        name.split(" ")[0] + " " + name.split(" ")[1] + " " + name.split(" ")[2]
-      );
-    }
-    if (name.startsWith("Jo")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1];
-    }
-    if (name.startsWith("Le")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1];
-    }
-    if (name.startsWith("Tom")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1];
-    }
-    if (name.startsWith("V")) {
-      return name.split(" ")[0] + " " + name.split(" ")[1];
-    }
-    if (name.startsWith("Yves")) {
-      return (
-        name.split(" ")[0] + " " + name.split(" ")[1] + " " + name.split(" ")[2]
-      );
-    }
-    return name.split(" ")[0];
   };
 
   const handleBrandChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -146,6 +194,16 @@ function Catalog() {
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+
+      setTimeout(() => {
+        const catalogElement = document.getElementById("catalog");
+        if (catalogElement) {
+          catalogElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 50); // Adding a slight delay
     }
   };
 
@@ -160,7 +218,7 @@ function Catalog() {
             placeholder="Поиск по названию..."
             value={searchQuery}
             onChange={handleSearchChange}
-            className=" "
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
         </div>
 

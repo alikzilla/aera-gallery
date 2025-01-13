@@ -91,18 +91,18 @@ const PerfumePage: React.FC = () => {
           <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
         </Link>
 
-        <div className="min-h-[380px] flex items-center justify-between bg-white rounded-xl shadow-lg overflow-hidden mb-[30px]">
-          <div className="w-[35%] flex-1 max-w-[450px] min-w-[300px] flex justify-center items-center p-5">
+        <div className="min-h-[380px] flex flex-col md:flex-row items-center justify-between bg-white rounded-xl shadow-lg overflow-hidden mb-[30px]">
+          <div className="w-full md:w-[35%] flex justify-center items-center p-5">
             <img
               src={product.url}
               alt={product.name}
-              className="w-auto h-[300px] rounded-lg"
+              className="w-full max-w-[350px] h-auto rounded-lg"
             />
           </div>
 
-          <div className="w-[65%] h-full flex flex-col flex-2 justify-between p-8 text-gray-700">
+          <div className="w-full md:w-[65%] flex flex-col justify-between p-8 text-gray-700">
             <div className="h-full flex flex-col items-start justify-start">
-              <h1 className="text-2xl font-semibold text-gray-800 mb-2 capitalize">
+              <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-2 capitalize">
                 {product.name}
               </h1>
               <h2 className="text-xl font-medium text-gray-600 mb-5">
