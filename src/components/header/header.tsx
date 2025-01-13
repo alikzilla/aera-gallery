@@ -11,7 +11,7 @@ const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showFavoriteWindow, setShowFavoriteWindow] = useState(false);
 
-  const { favoriteProducts } = useContext(FavoriteContext);
+  const { favoriteProducts, clearFavorites } = useContext(FavoriteContext); // Access clearFavorites from context
 
   // Calculate the total price of favorite products
   const totalPrice = favoriteProducts.reduce((total, product) => total + product.cost, 0);
@@ -35,9 +35,7 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`w-full fixed z-10 h-[60px] transition-all duration-300 ${
-          isScrolled ? "backdrop-blur-lg bg-white bg-opacity-80" : "bg-transparent"
-        }`}
+        className={`w-full fixed z-10 h-[60px] transition-all duration-300 ${isScrolled ? "backdrop-blur-lg bg-white bg-opacity-80" : "bg-transparent"}`}
       >
         <Container>
           <div className="h-full flex items-center justify-between relative">
@@ -66,11 +64,7 @@ const Header: React.FC = () => {
             </div>
 
             {/* Dropdown Menu for Mobile */}
-            <div
-              className={`${
-                !isOpen ? "translate-x-[-1000px]" : "translate-x-[-16px] sm:translate-x-[-32px]"
-              } absolute z-5 top-full w-screen bg-white shadow-lg p-5 md:hidden transition-all duration-300 ease-in-out`}
-            >
+            <div className={`${!isOpen ? "translate-x-[-1000px]" : "translate-x-[-16px] sm:translate-x-[-32px]"} absolute z-5 top-full w-screen bg-white shadow-lg p-5 md:hidden transition-all duration-300 ease-in-out`}>
               <nav className="flex items-center justify-center gap-3">
                 <Link to="/" className="relative group hover:text-yellow-600 transition-colors py-2">
                   Главная
@@ -156,6 +150,14 @@ const Header: React.FC = () => {
               >
                 Связаться через WhatsApp
               </a>
+
+              {/* Button to clear all favorites */}
+              <button
+                onClick={clearFavorites}
+                className="mt-4 w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600"
+              >
+                Очистить избранное
+              </button>
             </div>
           </div>
         </div>

@@ -6,9 +6,9 @@ interface FavoriteContextType {
   favoriteProducts: Product[];
   addFavoriteProduct: (product: Product) => void;
   removeFavoriteProduct: (productId: number) => void;
+  clearFavorites: () => void;  // Add clearFavorites to the interface
 }
 
-// Интерфейс для компонента FavoriteProvider с типом для children
 interface FavoriteProviderProps {
   children: ReactNode;
 }
@@ -17,12 +17,12 @@ export const FavoriteContext = createContext<FavoriteContextType>({
   favoriteProducts: [],
   addFavoriteProduct: () => {},
   removeFavoriteProduct: () => {},
+  clearFavorites: () => {},  // Provide an empty function as default
 });
 
 export const FavoriteProvider: React.FC<FavoriteProviderProps> = ({ children }) => {
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
 
-  // Загрузка данных из localStorage при первой загрузке
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favoriteProducts");
     if (storedFavorites) {
@@ -39,7 +39,6 @@ export const FavoriteProvider: React.FC<FavoriteProviderProps> = ({ children }) 
     }
   }, []);
 
-  // Сохранение данных в localStorage при изменении favoriteProducts
   useEffect(() => {
     if (favoriteProducts.length > 0) {
       try {
@@ -50,23 +49,29 @@ export const FavoriteProvider: React.FC<FavoriteProviderProps> = ({ children }) 
     }
   }, [favoriteProducts]);
 
-  // Добавление товара в избранное
+  // Add product to favorites
   const addFavoriteProduct = (product: Product) => {
     setFavoriteProducts((prev) => {
       if (!prev.some((fav) => fav.id === product.id)) {
         return [...prev, product];
       }
-      return prev; // Avoid adding duplicates
+      return prev;
     });
   };
 
-  // Удаление товара из избранного
+  // Remove product from favorites
   const removeFavoriteProduct = (productId: number) => {
     setFavoriteProducts((prev) => prev.filter((product) => product.id !== productId));
   };
 
+  // Clear all favorite products
+  const clearFavorites = () => {
+    setFavoriteProducts([]);
+    localStorage.removeItem("favoriteProducts");
+  };
+
   return (
-    <FavoriteContext.Provider value={{ favoriteProducts, addFavoriteProduct, removeFavoriteProduct }}>
+    <FavoriteContext.Provider value={{ favoriteProducts, addFavoriteProduct, removeFavoriteProduct, clearFavorites }}>
       {children}
     </FavoriteContext.Provider>
   );
