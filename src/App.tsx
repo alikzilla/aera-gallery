@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Homepage, About, Contacts, PerfumePage } from "./pages";
 import { Header, Footer } from "./components";
-import { FavoriteProvider } from './components/favorites/favorites';
+import { FavoriteProvider } from "./components/favorites/favorites";
 
 function App() {
   return (
@@ -13,7 +13,10 @@ function App() {
           <Route index element={<Homepage />} />
           <Route path="about" element={<About />} />
           <Route path="contacts" element={<Contacts />} />
-          <Route path="perfumes/:id" element={<PerfumePage />} />
+          <Route
+            path="perfumes/:sheetName/:id"
+            element={<PerfumePage />}
+          />
         </Routes>
       </div>
       <Footer />

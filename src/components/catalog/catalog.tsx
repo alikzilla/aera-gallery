@@ -13,18 +13,34 @@ function Catalog() {
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 20;
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
   const [sortOption, setSortOption] = useState<string>("name-asc");
 
   const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } =
     useContext(FavoriteContext);
 
+  const updateItemsPerPage = () => {
+    const width = window.innerWidth;
+    if (width <= 768) {
+      setItemsPerPage(8);
+    } else if (width <= 1024) {
+      setItemsPerPage(12);
+    } else {
+      setItemsPerPage(20);
+    }
+  };
+
+  useEffect(() => {
+    updateItemsPerPage();
+    window.addEventListener("resize", updateItemsPerPage);
+    return () => window.removeEventListener("resize", updateItemsPerPage);
+  }, []);
+
   useEffect(() => {
     const fetchProducts = async () => {
       const sheetId = "1qD8BK7B51Ye-UzCbEFE5QCQrgE5od6dyniFDtUwXJiw";
       const apiKey = "AIzaSyAeeWYFcj-knuSe2xTNT5UYyLWyzr4hVKI";
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetname}!A1:G?key=${apiKey}`;
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetname}!A1:H?key=${apiKey}`;
 
       try {
         const response = await fetch(url);
@@ -42,10 +58,11 @@ function Catalog() {
               description: row[4],
               descriptionKz: row[5],
               country: row[6],
+              volume: row[7],
+              type: sheetname
             })
           );
           setProducts(formattedProducts);
-          console.log("dasdsada");
         }
       } catch (error) {
         console.error("Ошибка при загрузке данных из Google Sheets:", error);
@@ -59,7 +76,6 @@ function Catalog() {
 
   const getBrandFromName = (name: string) => {
     const brandPrefix = name.split(" ")[0];
-    // Brand extraction logic remains unchanged
     switch (brandPrefix) {
       case "Al":
       case "By":
@@ -173,7 +189,7 @@ function Catalog() {
       setTimeout(() => {
         const catalogElement = document.getElementById("catalog");
         if (catalogElement) {
-          const yOffset = -60; // Offset by 60px upwards
+          const yOffset = -60;
           const yPosition =
             catalogElement.getBoundingClientRect().top +
             window.pageYOffset +
@@ -272,21 +288,11 @@ function Catalog() {
         {!loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {currentProducts.map((product, index) => (
-              <div
-                className="flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300"
+              <Link
+                to={`/perfumes/${sheetname}/${product.name}`}
+                className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300"
                 key={index}
               >
-                <div
-                  className="absolute top-3 right-3 cursor-pointer text-2xl"
-                  onClick={() => handleFavoriteClick(product)}
-                >
-                  {favoriteProducts.some((fav) => fav.id === product.id) ? (
-                    <SolidHeartIcon className="h-7 w-7 cursor-pointer text-red-500 transition-all duration-300" />
-                  ) : (
-                    <OutlineHeartIcon className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500" />
-                  )}
-                </div>
-
                 <div className="w-full flex flex-col items-center justify-center">
                   <img
                     src={product.url}
@@ -298,19 +304,26 @@ function Catalog() {
                   </h3>
                 </div>
 
+                <div className="absolute top-0 left-2 flex items-center gap-5 mt-2">
+                  <h2 className="bg-yellow-600 py-1 px-2 rounded-md text-white">
+                    {product.volume} МЛ
+                  </h2>
+                </div>
+
                 <div>
                   <p className="text-gray-700">
-                    <strong>Цена:</strong> {product.cost} KZT {sheetname === "spilled" && "за МЛ"}
+                    <strong>Цена:</strong> {product.cost} KZT{" "}
+                    {sheetname === "spilled" && "за МЛ"}
                   </p>
                   <Link
                     to={`/perfumes/${product.name}`}
-                    className="relative group hover:text-yellow-600 transition-colors"
+                    className="relative text-yellow-600 transition-colors"
                   >
-                    Подробнее
+                    Нажмите чтобы посмотреть
                     <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                   </Link>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         ) : (

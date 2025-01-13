@@ -1,4 +1,4 @@
-export{}
+export {};
 
 export interface Product {
   id: number;
@@ -9,4 +9,6 @@ export interface Product {
   description?: string;
   descriptionKz?: string;
   country?: string;
+  volume?: string;
+  type?: string;
 }

@@ -46,7 +46,9 @@ const Header: React.FC = () => {
     const message = products
       .map(
         (product, index) =>
-          `${index + 1}. ${product.name} - ${product.cost} KZT`
+          `${index + 1}. ${product.name} - ${product.cost} KZT ${
+            !product.volume ? "за МЛ" : ""
+          }`
       )
       .join("\n");
 
@@ -190,7 +192,7 @@ const Header: React.FC = () => {
                     />
                     <div>
                       <Link
-                        to={`/perfumes/${product.name}`}
+                        to={`/perfumes/${product.volume ? "original" : "spilled"}/${product.name}`}
                         onClick={() => setShowFavoriteWindow(false)}
                         className="font-bold relative group hover:text-yellow-600 transition-colors py-2"
                       >
@@ -199,7 +201,7 @@ const Header: React.FC = () => {
                       </Link>
                       <br />
                       <span className="text-sm text-gray-500">
-                        Цена: {product.cost} KZT
+                        Цена: {product.cost} KZT {!product.volume && "за МЛ"}
                       </span>
                     </div>
                   </div>
