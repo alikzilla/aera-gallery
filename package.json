@@ -1,6 +1,6 @@
 {
   "name": "aera-gallery",
-  "homepage": "https://alikzilla.github.io/aera-gallery/",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
