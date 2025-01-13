@@ -205,7 +205,7 @@ function Catalog() {
   };
 
   return (
-    <section className="mb-5" id="catalog">
+    <section className="mb-5 pt-10" id="catalog">
       <Container>
         <h1 className="text-3xl font-bold mb-6">Каталог товаров</h1>
 

@@ -6,3 +6,60 @@
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
     Helvetica, Arial, "Lucida Grande", sans-serif;
 }
+
+.custom-swiper-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: gray;
+  cursor: pointer;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: black;
+}
+
+
+/* Custom navigation button styles */
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: #000; /* Set background color */
+  color: #fff; /* Set text color */
+  width: 50px; /* Set width */
+  height: 50px; /* Set height */
+  border-radius: 50%; /* Make them round */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10; /* Ensure they are on top of the slider */
+}
+
+/* Hover effect for navigation buttons */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #555; /* Darker background on hover */
+  color: #fff; /* Keep text color white on hover */
+}
+
+/* Customize the arrows inside the navigation buttons */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px; /* Set arrow size */
+  font-weight: bold; /* Make arrows bold */
+}
+
+/* Customize the next button */
+.swiper-button-next {
+  right: 10px; /* Position it on the right */
+}
+
+/* Customize the previous button */
+.swiper-button-prev {
+  left: 10px; /* Position it on the left */
+}

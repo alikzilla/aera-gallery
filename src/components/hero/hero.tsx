@@ -1,40 +1,63 @@
-import Container from "../container/container";
-import logo from "../../assets/logoM.png";
-import Button from "../button/button";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Import Autoplay module
+import "swiper/css";
 
 const Hero = () => {
-  const handlePerfumesLook = () => {
-    window.scrollTo({
-      top: (document.getElementById("catalog")?.offsetTop || 0) - 60,
-      behavior: "smooth",
-    });
-  };
-
   return (
-    <section className="flex items-center justify-center py-[70px]">
-      <Container>
-        <div className="w-full flex flex-col-reverse md:flex-row items-start md:items-center justify-between gap-10">
-          <div className="flex flex-col items-start gap-1">
-            <img src={logo} alt="logo" className="w-[150px] md:w-[200px]" />
-            <h1 className="text-4xl md:text-5xl text-wrap">
-              место где ароматы <br />
-              <span className="font-georg">оживляют мечты</span>
-            </h1>
-            <Button className="mt-2" onClick={() => handlePerfumesLook()}>
-              Посмотреть ароматы
-            </Button>
-          </div>
-          <div className="relative w-full max-w-[700px]">
-            <img
-              src={
-                "https://irfe.com/wp-content/uploads/2024/04/A-collection-of-the-expensive-perfumes-for-women-displayed-on-a-luxurious-vanity-1300x743.jpg"
-              }
-              alt="hero background"
-              className="w-full md:h-[400px] object-cover rounded-xl"
-            />
-          </div>
-        </div>
-      </Container>
+    <section className="w-full">
+      <Swiper
+        pagination={{ clickable: true }}
+        loop={true}
+        autoplay={{
+          delay: 3000, 
+          disableOnInteraction: false, 
+        }}
+        speed={800} 
+        modules={[Autoplay]}
+        className="w-full"
+      >
+        {/* Slide 1 */}
+        <SwiperSlide>
+          <img
+            src="https://visagehall.ru/upload/resize_cache/webp/iblock/038/mci81vpsuaj7m6znje5b749990rfsdul.webp"
+            alt="Slide 1"
+            className="w-full object-cover"
+          />
+        </SwiperSlide>
+        {/* Slide 2 */}
+        <SwiperSlide>
+          <img
+            src="https://visagehall.ru/upload/resize_cache/webp/uf/ee5/f403szm2j9zqga4hu1ecayjhzlu5tyv5.webp"
+            alt="Slide 2"
+            className="w-full object-cover"
+          />
+        </SwiperSlide>
+        {/* Slide 3 */}
+        <SwiperSlide>
+          <img
+            src="https://visagehall.ru/upload/resize_cache/webp/resize_cache/uf/e8c/1920_1080_0/gdrd5vwmdbnoyad0s7oiolk7rim344tc.webp"
+            alt="Slide 3"
+            className="w-full object-cover"
+          />
+        </SwiperSlide>
+        {/* Slide 4 */}
+        <SwiperSlide>
+          <img
+            src="https://visagehall.ru/upload/resize_cache/webp/resize_cache/uf/200/1920_1080_0/w6ueu7tidtrixt6b4emv43zh2ymlfah1.webp"
+            alt="Slide 4"
+            className="w-full object-cover"
+          />
+        </SwiperSlide>
+        {/* Slide 5 */}
+        <SwiperSlide>
+          <img
+            src="https://visagehall.ru/upload/resize_cache/webp/resize_cache/uf/e20/1920_1080_0/kwgnqysbql954qkuputy0p6x072vc4hy.webp"
+            alt="Slide 5"
+            className="w-full object-cover"
+          />
+        </SwiperSlide>
+      </Swiper>
+      <br />
     </section>
   );
 };
