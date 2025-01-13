@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/%7Baera-gallery%7D/static/css/main.73955915.css",
-    "main.js": "/%7Baera-gallery%7D/static/js/main.9ae98bcf.js",
-    "static/js/453.269f0334.chunk.js": "/%7Baera-gallery%7D/static/js/453.269f0334.chunk.js",
-    "static/media/Instagram_logo_2016.svg.webp": "/%7Baera-gallery%7D/static/media/Instagram_logo_2016.svg.3090db40fa34a1e434a6.webp",
-    "static/media/map.jpg": "/%7Baera-gallery%7D/static/media/map.55e0c51399f62d4e072d.jpg",
-    "static/media/WhatsApp.svg.webp": "/%7Baera-gallery%7D/static/media/WhatsApp.svg.e1c763ccd0a128a665c3.webp",
-    "static/media/logoM.png": "/%7Baera-gallery%7D/static/media/logoM.b21d6a269611a1de5388.png",
-    "static/media/logoM-white.png": "/%7Baera-gallery%7D/static/media/logoM-white.d02d0d8277dcb9ff7040.png",
-    "index.html": "/%7Baera-gallery%7D/index.html",
-    "main.73955915.css.map": "/%7Baera-gallery%7D/static/css/main.73955915.css.map",
-    "main.9ae98bcf.js.map": "/%7Baera-gallery%7D/static/js/main.9ae98bcf.js.map",
-    "453.269f0334.chunk.js.map": "/%7Baera-gallery%7D/static/js/453.269f0334.chunk.js.map"
+    "main.css": "/aera-gallery/static/css/main.73955915.css",
+    "main.js": "/aera-gallery/static/js/main.394b0dd5.js",
+    "static/js/453.269f0334.chunk.js": "/aera-gallery/static/js/453.269f0334.chunk.js",
+    "static/media/Instagram_logo_2016.svg.webp": "/aera-gallery/static/media/Instagram_logo_2016.svg.3090db40fa34a1e434a6.webp",
+    "static/media/map.jpg": "/aera-gallery/static/media/map.55e0c51399f62d4e072d.jpg",
+    "static/media/WhatsApp.svg.webp": "/aera-gallery/static/media/WhatsApp.svg.e1c763ccd0a128a665c3.webp",
+    "static/media/logoM.png": "/aera-gallery/static/media/logoM.b21d6a269611a1de5388.png",
+    "static/media/logoM-white.png": "/aera-gallery/static/media/logoM-white.d02d0d8277dcb9ff7040.png",
+    "index.html": "/aera-gallery/index.html",
+    "main.73955915.css.map": "/aera-gallery/static/css/main.73955915.css.map",
+    "main.394b0dd5.js.map": "/aera-gallery/static/js/main.394b0dd5.js.map",
+    "453.269f0334.chunk.js.map": "/aera-gallery/static/js/453.269f0334.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.73955915.css",
-    "static/js/main.9ae98bcf.js"
+    "static/js/main.394b0dd5.js"
   ]
 }
