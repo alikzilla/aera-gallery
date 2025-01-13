@@ -2,10 +2,11 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Homepage, About, Contacts, PerfumePage } from "./pages";
 import { Header, Footer } from "./components";
+import { FavoriteProvider } from './components/favorites/favorites';
 
 function App() {
   return (
-    <>
+    <FavoriteProvider>
       <Header />
       <div className="pt-[60px]">
         <Routes>
@@ -16,7 +17,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
-    </>
+    </FavoriteProvider>
   );
 }
 

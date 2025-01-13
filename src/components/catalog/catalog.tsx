@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Container, Button, Loader } from "../";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
+import { Product } from "../../types/product";
+import { FavoriteContext } from "../favorites/favorites";
 
-interface Product {
-  id: number;
-  name: string;
-  cost: number;
-  url: string;
-}
 
 function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -17,8 +13,11 @@ function Catalog() {
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const itemsPerPage = 20;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } = useContext(FavoriteContext);
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -157,13 +156,11 @@ function Catalog() {
   };
 
   const handleFavoriteClick = (product: Product) => {
-    setFavoriteProducts((prevFavorites) => {
-      if (prevFavorites.some((item) => item.name === product.name)) {
-        return prevFavorites.filter((item) => item.name !== product.name);
-      } else {
-        return [...prevFavorites, product];
-      }
-    });
+    if (favoriteProducts.some((fav) => fav.name === product.name)) {
+      removeFavoriteProduct(product.name);
+    } else {
+      addFavoriteProduct(product);
+    }
   };
 
   const filteredProducts = products.filter((product) => {
@@ -248,7 +245,7 @@ function Catalog() {
                   className="absolute top-3 right-3 cursor-pointer text-2xl"
                   onClick={() => handleFavoriteClick(product)}
                 >
-                  {favoriteProducts.some((item) => item.id === product.id) ? (
+                  {favoriteProducts.some((fav) => fav.name === product.name) ? (
                     <SolidHeartIcon className="h-7 w-7 cursor-pointer text-red-500 transition-all duration-300" />
                   ) : (
                     <OutlineHeartIcon className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500" />
