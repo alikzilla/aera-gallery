@@ -14,9 +14,9 @@ function Catalog() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 20;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortOption, setSortOption] = useState<string>("name-asc");
 
-  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } =
-    useContext(FavoriteContext);
+  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } = useContext(FavoriteContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -56,7 +56,7 @@ function Catalog() {
 
   const getBrandFromName = (name: string) => {
     const brandPrefix = name.split(" ")[0];
-
+    // Brand extraction logic remains unchanged
     switch (brandPrefix) {
       case "Al":
       case "By":
@@ -82,62 +82,14 @@ function Catalog() {
         return name.split(" ")[0] + " " + name.split(" ")[1];
 
       case "Jean":
-        return (
-          name.split(" ")[0] +
-          " " +
-          name.split(" ")[1] +
-          " " +
-          name.split(" ")[2]
-        );
-
       case "Yves":
-        return (
-          name.split(" ")[0] +
-          " " +
-          name.split(" ")[1] +
-          " " +
-          name.split(" ")[2]
-        );
-
       case "Viktor":
-        return (
-          name.split(" ")[0] +
-          " " +
-          name.split(" ")[1] +
-          " " +
-          name.split(" ")[2]
-        );
-
       case "Acqua":
-        return (
-          name.split(" ")[0] +
-          " " +
-          name.split(" ")[1] +
-          " " +
-          name.split(" ")[2]
-        );
+        return name.split(" ").slice(0, 3).join(" ");
 
       case "Juliette":
-        return (
-          name.split(" ")[0] +
-          " " +
-          name.split(" ")[1] +
-          " " +
-          name.split(" ")[2] +
-          " " +
-          name.split(" ")[3]
-        );
-
       case "Armaf":
-        return (
-          name.split(" ")[0] +
-          " " +
-          name.split(" ")[1] +
-          " " +
-          name.split(" ")[2] +
-          " " +
-          name.split(" ")[3]
-        );
+        return name.split(" ").slice(0, 4).join(" ");
 
       default:
         return name.split(" ")[0];
@@ -152,6 +104,10 @@ function Catalog() {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
     setCurrentPage(1);
+  };
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(event.target.value);
   };
 
   const handleFavoriteClick = (product: Product) => {
@@ -177,8 +133,23 @@ function Catalog() {
     return matchesBrand && matchesSearchQuery;
   });
 
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const currentProducts = filteredProducts.slice(
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortOption) {
+      case "name-asc":
+        return a.name.localeCompare(b.name);
+      case "name-desc":
+        return b.name.localeCompare(a.name);
+      case "price-asc":
+        return a.cost - b.cost;
+      case "price-desc":
+        return b.cost - a.cost;
+      default:
+        return 0;
+    }
+  });
+
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  const currentProducts = sortedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -204,7 +175,7 @@ function Catalog() {
   };
 
   return (
-    <section className="mb-5 pt-10" id="catalog">
+    <section className="mb-5 pt-9" id="catalog">
       <Container>
         <h1 className="text-3xl font-bold mb-6">Каталог товаров</h1>
 
@@ -218,20 +189,41 @@ function Catalog() {
           />
         </div>
 
-        <div className="mb-4">
-          <label className="mr-2 font-medium">Выберите бренд:</label>
-          <select
-            onChange={handleBrandChange}
-            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          >
-            <option>Все бренды</option>
-            {brands.map((brand, index) => (
-              <option key={index} value={brand}>
-                {brand}
-              </option>
-            ))}
-          </select>
-        </div>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+  {/* Search and Brand Filter */}
+  <div className="flex gap-4 items-center">
+    <div>
+      <label className="mr-2 font-medium text-gray-700">Бренд:</label>
+      <select
+        onChange={handleBrandChange}
+        className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      >
+        <option>Все бренды</option>
+        {brands.map((brand, index) => (
+          <option key={index} value={brand}>
+            {brand}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+
+  {/* Sorting Options */}
+  <div className="flex items-center gap-4">
+    <label className="font-medium text-gray-700">Сортировать:</label>
+    <select
+      onChange={handleSortChange}
+      value={sortOption}
+      className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+    >
+      <option value="name-asc">Название (А-Я)</option>
+      <option value="name-desc">Название (Я-А)</option>
+      <option value="price-asc">Цена (по возрастанию)</option>
+      <option value="price-desc">Цена (по убыванию)</option>
+    </select>
+  </div>
+</div>
+
 
         {!loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
