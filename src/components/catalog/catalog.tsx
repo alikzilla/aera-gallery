@@ -8,6 +8,7 @@ import { FavoriteContext } from "../favorites/favorites";
 
 function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [sheetname, setSheetname] = useState<string>("original");
   const [loading, setLoading] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -16,13 +17,14 @@ function Catalog() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>("name-asc");
 
-  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } = useContext(FavoriteContext);
+  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } =
+    useContext(FavoriteContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const sheetId = "1qD8BK7B51Ye-UzCbEFE5QCQrgE5od6dyniFDtUwXJiw";
       const apiKey = "AIzaSyAeeWYFcj-knuSe2xTNT5UYyLWyzr4hVKI";
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/spilled!A1:G?key=${apiKey}`;
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetname}!A1:G?key=${apiKey}`;
 
       try {
         const response = await fetch(url);
@@ -43,6 +45,7 @@ function Catalog() {
             })
           );
           setProducts(formattedProducts);
+          console.log("dasdsada");
         }
       } catch (error) {
         console.error("Ошибка при загрузке данных из Google Sheets:", error);
@@ -52,7 +55,7 @@ function Catalog() {
     };
 
     fetchProducts();
-  }, []);
+  }, [sheetname]);
 
   const getBrandFromName = (name: string) => {
     const brandPrefix = name.split(" ")[0];
@@ -94,6 +97,11 @@ function Catalog() {
       default:
         return name.split(" ")[0];
     }
+  };
+
+  const handleTabChange = (tab: string) => {
+    setSheetname(tab);
+    setCurrentPage(1);
   };
 
   const handleBrandChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -165,12 +173,18 @@ function Catalog() {
       setTimeout(() => {
         const catalogElement = document.getElementById("catalog");
         if (catalogElement) {
-          catalogElement.scrollIntoView({
+          const yOffset = -60; // Offset by 60px upwards
+          const yPosition =
+            catalogElement.getBoundingClientRect().top +
+            window.pageYOffset +
+            yOffset;
+
+          window.scrollTo({
+            top: yPosition,
             behavior: "smooth",
-            block: "start",
           });
         }
-      }, 50); // Adding a slight delay
+      }, 50);
     }
   };
 
@@ -178,6 +192,37 @@ function Catalog() {
     <section className="mb-5 pt-9" id="catalog">
       <Container>
         <h1 className="text-3xl font-bold mb-6">Каталог товаров</h1>
+        {/* Tabs for switching between sheets */}
+        <div className="mb-4 flex justify-center relative">
+          {/* Highlight bar for active tab */}
+          <div
+            className={`absolute bottom-0 h-[4px] bg-yellow-600 transition-all duration-300`}
+            style={{
+              width: "50%",
+              transform:
+                sheetname === "original"
+                  ? "translateX(-50%)"
+                  : "translateX(50%)",
+            }}
+          ></div>
+
+          <button
+            className={`w-full p-3 border border-t border-l rounded-l-lg ${
+              sheetname === "original" ? "text-black" : "bg-white"
+            } transition-colors duration-300`}
+            onClick={() => handleTabChange("original")}
+          >
+            Полный объем
+          </button>
+          <button
+            className={`w-full p-3 border border-t border-r rounded-r-lg ${
+              sheetname === "spilled" ? "text-black" : "bg-white"
+            } transition-colors duration-300`}
+            onClick={() => handleTabChange("spilled")}
+          >
+            Разливные
+          </button>
+        </div>
 
         <div className="mb-4">
           <input
@@ -190,40 +235,39 @@ function Catalog() {
         </div>
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-  {/* Search and Brand Filter */}
-  <div className="flex gap-4 items-center">
-    <div>
-      <label className="mr-2 font-medium text-gray-700">Бренд:</label>
-      <select
-        onChange={handleBrandChange}
-        className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-      >
-        <option>Все бренды</option>
-        {brands.map((brand, index) => (
-          <option key={index} value={brand}>
-            {brand}
-          </option>
-        ))}
-      </select>
-    </div>
-  </div>
+          {/* Search and Brand Filter */}
+          <div className="flex gap-4 items-center">
+            <div>
+              <label className="mr-2 font-medium text-gray-700">Бренд:</label>
+              <select
+                onChange={handleBrandChange}
+                className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              >
+                <option>Все бренды</option>
+                {brands.map((brand, index) => (
+                  <option key={index} value={brand}>
+                    {brand}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-  {/* Sorting Options */}
-  <div className="flex items-center gap-4">
-    <label className="font-medium text-gray-700">Сортировать:</label>
-    <select
-      onChange={handleSortChange}
-      value={sortOption}
-      className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-    >
-      <option value="name-asc">Название (А-Я)</option>
-      <option value="name-desc">Название (Я-А)</option>
-      <option value="price-asc">Цена (по возрастанию)</option>
-      <option value="price-desc">Цена (по убыванию)</option>
-    </select>
-  </div>
-</div>
-
+          {/* Sorting Options */}
+          <div className="flex items-center gap-4">
+            <label className="font-medium text-gray-700">Сортировать:</label>
+            <select
+              onChange={handleSortChange}
+              value={sortOption}
+              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+              <option value="name-asc">Название (A-Z)</option>
+              <option value="name-desc">Название (Z-A)</option>
+              <option value="price-asc">Цена (по возрастанию)</option>
+              <option value="price-desc">Цена (по убыванию)</option>
+            </select>
+          </div>
+        </div>
 
         {!loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -256,7 +300,7 @@ function Catalog() {
 
                 <div>
                   <p className="text-gray-700">
-                    <strong>Цена:</strong> {product.cost} KZT за МЛ
+                    <strong>Цена:</strong> {product.cost} KZT {sheetname === "spilled" && "за МЛ"}
                   </p>
                   <Link
                     to={`/perfumes/${product.name}`}
