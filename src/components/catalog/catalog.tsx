@@ -6,7 +6,6 @@ import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 import { Product } from "../../types/product";
 import { FavoriteContext } from "../favorites/favorites";
 
-
 function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -16,8 +15,8 @@ function Catalog() {
   const itemsPerPage = 20;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } = useContext(FavoriteContext);
-
+  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } =
+    useContext(FavoriteContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
