@@ -22,7 +22,7 @@ const About: React.FC = () => {
                 <div className="flex">
                   <img
                     className="w-full h-auto object-cover"
-                    src="DALL·E 2025-01-14 00.26.34 - A minimalist and aesthetic design for a perfume website, featuring a luxurious glass perfume bottle surrounded by delicate, colorful flowers in soft p (1).webp"
+                    src="about.webp"
                     alt="Слайд 1"
                   />
                 </div>
