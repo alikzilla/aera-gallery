@@ -156,8 +156,8 @@ function Catalog() {
   };
 
   const handleFavoriteClick = (product: Product) => {
-    if (favoriteProducts.some((fav) => fav.name === product.name)) {
-      removeFavoriteProduct(product.name);
+    if (favoriteProducts.some((fav) => fav.id === product.id)) {
+      removeFavoriteProduct(product.id);
     } else {
       addFavoriteProduct(product);
     }
@@ -245,7 +245,7 @@ function Catalog() {
                   className="absolute top-3 right-3 cursor-pointer text-2xl"
                   onClick={() => handleFavoriteClick(product)}
                 >
-                  {favoriteProducts.some((fav) => fav.name === product.name) ? (
+                  {favoriteProducts.some((fav) => fav.id === product.id) ? (
                     <SolidHeartIcon className="h-7 w-7 cursor-pointer text-red-500 transition-all duration-300" />
                   ) : (
                     <OutlineHeartIcon className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500" />

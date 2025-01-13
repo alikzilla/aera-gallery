@@ -1,51 +1,72 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { Product } from "../../types/product";
 
-
-interface FavoriteContextProps {
+// Тип контекста для избранных товаров
+interface FavoriteContextType {
   favoriteProducts: Product[];
   addFavoriteProduct: (product: Product) => void;
-  removeFavoriteProduct: (productName: string) => void;
+  removeFavoriteProduct: (productId: number) => void;
 }
 
-export const FavoriteContext = createContext<FavoriteContextProps>({
+// Интерфейс для компонента FavoriteProvider с типом для children
+interface FavoriteProviderProps {
+  children: ReactNode;
+}
+
+export const FavoriteContext = createContext<FavoriteContextType>({
   favoriteProducts: [],
   addFavoriteProduct: () => {},
   removeFavoriteProduct: () => {},
 });
 
-interface FavoriteProviderProps {
-  children: React.ReactNode;
-}
-
 export const FavoriteProvider: React.FC<FavoriteProviderProps> = ({ children }) => {
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
 
+  // Загрузка данных из localStorage при первой загрузке
   useEffect(() => {
-    const savedFavorites = localStorage.getItem("favoriteProducts");
-    if (savedFavorites) {
-      setFavoriteProducts(JSON.parse(savedFavorites));
+    const storedFavorites = localStorage.getItem("favoriteProducts");
+    if (storedFavorites) {
+      try {
+        const parsedFavorites = JSON.parse(storedFavorites);
+        if (Array.isArray(parsedFavorites)) {
+          setFavoriteProducts(parsedFavorites);
+        } else {
+          console.error("Invalid data format in localStorage for favorites.");
+        }
+      } catch (error) {
+        console.error("Error parsing favorites from localStorage", error);
+      }
     }
   }, []);
 
+  // Сохранение данных в localStorage при изменении favoriteProducts
   useEffect(() => {
-    localStorage.setItem("favoriteProducts", JSON.stringify(favoriteProducts));
+    if (favoriteProducts.length > 0) {
+      try {
+        localStorage.setItem("favoriteProducts", JSON.stringify(favoriteProducts));
+      } catch (error) {
+        console.error("Error saving favorites to localStorage", error);
+      }
+    }
   }, [favoriteProducts]);
 
+  // Добавление товара в избранное
   const addFavoriteProduct = (product: Product) => {
-    setFavoriteProducts((prev) => [...prev, product]);
+    setFavoriteProducts((prev) => {
+      if (!prev.some((fav) => fav.id === product.id)) {
+        return [...prev, product];
+      }
+      return prev; // Avoid adding duplicates
+    });
   };
 
-  const removeFavoriteProduct = (productName: string) => {
-    setFavoriteProducts((prev) =>
-      prev.filter((product) => product.name !== productName)
-    );
+  // Удаление товара из избранного
+  const removeFavoriteProduct = (productId: number) => {
+    setFavoriteProducts((prev) => prev.filter((product) => product.id !== productId));
   };
 
   return (
-    <FavoriteContext.Provider
-      value={{ favoriteProducts, addFavoriteProduct, removeFavoriteProduct }}
-    >
+    <FavoriteContext.Provider value={{ favoriteProducts, addFavoriteProduct, removeFavoriteProduct }}>
       {children}
     </FavoriteContext.Provider>
   );
