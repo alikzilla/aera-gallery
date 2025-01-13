@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/aera-gallery/static/css/main.fcb7185d.css",
-    "main.js": "/aera-gallery/static/js/main.b32283b9.js",
-    "static/js/453.269f0334.chunk.js": "/aera-gallery/static/js/453.269f0334.chunk.js",
-    "static/media/Instagram_logo_2016.svg.webp": "/aera-gallery/static/media/Instagram_logo_2016.svg.3090db40fa34a1e434a6.webp",
-    "static/media/map.jpg": "/aera-gallery/static/media/map.55e0c51399f62d4e072d.jpg",
-    "static/media/WhatsApp.svg.webp": "/aera-gallery/static/media/WhatsApp.svg.e1c763ccd0a128a665c3.webp",
-    "static/media/logoM.png": "/aera-gallery/static/media/logoM.b21d6a269611a1de5388.png",
-    "static/media/logoM-white.png": "/aera-gallery/static/media/logoM-white.d02d0d8277dcb9ff7040.png",
-    "index.html": "/aera-gallery/index.html",
-    "main.fcb7185d.css.map": "/aera-gallery/static/css/main.fcb7185d.css.map",
-    "main.b32283b9.js.map": "/aera-gallery/static/js/main.b32283b9.js.map",
-    "453.269f0334.chunk.js.map": "/aera-gallery/static/js/453.269f0334.chunk.js.map"
+    "main.css": "./static/css/main.fcb7185d.css",
+    "main.js": "./static/js/main.0308441a.js",
+    "static/js/453.269f0334.chunk.js": "./static/js/453.269f0334.chunk.js",
+    "static/media/Instagram_logo_2016.svg.webp": "./static/media/Instagram_logo_2016.svg.3090db40fa34a1e434a6.webp",
+    "static/media/map.jpg": "./static/media/map.55e0c51399f62d4e072d.jpg",
+    "static/media/WhatsApp.svg.webp": "./static/media/WhatsApp.svg.e1c763ccd0a128a665c3.webp",
+    "static/media/logoM.png": "./static/media/logoM.b21d6a269611a1de5388.png",
+    "static/media/logoM-white.png": "./static/media/logoM-white.d02d0d8277dcb9ff7040.png",
+    "index.html": "./index.html",
+    "main.fcb7185d.css.map": "./static/css/main.fcb7185d.css.map",
+    "main.0308441a.js.map": "./static/js/main.0308441a.js.map",
+    "453.269f0334.chunk.js.map": "./static/js/453.269f0334.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fcb7185d.css",
-    "static/js/main.b32283b9.js"
+    "static/js/main.0308441a.js"
   ]
 }
