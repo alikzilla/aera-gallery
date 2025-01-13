@@ -164,7 +164,7 @@ const PerfumePage: React.FC = () => {
               <div>
                 <strong>Выберите количество (МЛ):</strong>
                 <div className="flex gap-4 mt-2">
-                  {[1, 3, 5, 10].map((ml) => (
+                  {[1, 10, 15, 20, 30].map((ml) => (
                     <label
                       key={ml}
                       className="flex items-center gap-2 cursor-pointer group relative"
