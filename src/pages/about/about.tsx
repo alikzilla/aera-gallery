@@ -22,13 +22,15 @@ const About: React.FC = () => {
                 <div className="flex">
                   <img
                     className="w-full h-auto object-cover"
-                    src="about.webp"
+                    src="about.webp" 
                     alt="Слайд 1"
                   />
                 </div>
               </div>
             </div>
           </div>
+
+
 
           {/* Текст справа */}
           <div className="w-full md:w-1/2 pl-8">
