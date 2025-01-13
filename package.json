@@ -36,7 +36,7 @@
     "build": "npm install --legacy-peer-deps && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
+  }, 
   "eslintConfig": {
     "extends": [
       "react-app",
