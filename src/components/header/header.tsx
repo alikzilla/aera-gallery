@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   }, []); 
   
   const whatsappMessage = (products: Product[]) => {
-    const phoneNumber = "87780547007";
+    const phoneNumber = "77780547007";
     if (products.length === 0) {
       alert("Ваш список избранных товаров пуст.");
       return;

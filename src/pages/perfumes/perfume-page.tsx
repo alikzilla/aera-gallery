@@ -85,7 +85,7 @@ const PerfumePage: React.FC = () => {
   };
 
   const whatsappMessage = () => {
-    const phoneNumber = "87780547007";
+    const phoneNumber = "77780547007";
     const message = `Здравствуйте! Я заинтересован в товаре: ${
       product?.name
     }, стоимость: ${product?.cost} KZT ${
@@ -94,6 +94,7 @@ const PerfumePage: React.FC = () => {
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
+    //https://wa.me/77780547007?text=Здравствуйте!%20Я%20заинтересован%20в%20товаре:%20AFNAN%20SUPREMACY%20SILVER,%20стоимость:%2032000%20KZT
     window.open(whatsappUrl, "_blank");
   };
 
