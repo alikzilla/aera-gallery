@@ -236,7 +236,7 @@ function Catalog() {
             } transition-colors duration-300`}
             onClick={() => handleTabChange("spilled")}
           >
-            Разливные
+            Распив
           </button>
         </div>
 
