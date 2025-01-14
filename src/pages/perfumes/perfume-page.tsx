@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, Link, useSearchParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button, Container, Loader } from "../../components";
 import whatsapp from "../../assets/WhatsApp.svg.webp";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
@@ -10,12 +10,14 @@ import { Product } from "../../types/product";
 import { useTranslation } from "react-i18next";
 
 const PerfumePage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
   const { id, sheetName } = useParams<{ id: string; sheetName: string }>();
   const [product, setProduct] = useState<Product | null>(null);
+  const [description, setDescription] = useState<string | undefined>("");
   const [otherPerfumes, setOtherPerfumes] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedML, setSelectedML] = useState<number>(1); // State for selected ML quantity
+  const [selectedML, setSelectedML] = useState<number>(1);
   const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } =
     useContext(FavoriteContext);
 
@@ -42,10 +44,13 @@ const PerfumePage: React.FC = () => {
               cost: parseFloat(foundProduct[2]),
               url: foundProduct[3],
               description: foundProduct[4],
+              descriptionKz: foundProduct[5],
               country: foundProduct[6],
               volume: foundProduct[7],
             });
           }
+
+          setDescription(foundProduct[4]);
 
           const randomPerfumes = rows
             .filter((row: string[]) => row[0] !== id)
@@ -71,12 +76,20 @@ const PerfumePage: React.FC = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, sheetName]);
 
   useEffect(() => {
     // Scroll to top when the component is mounted
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [product]);
+
+  useEffect(() => {
+    if (product) {
+      currentLanguage === "kz"
+        ? setDescription(product.descriptionKz)
+        : setDescription(product.description);
+    }
+  }, [currentLanguage, product]);
 
   const handleFavoriteClick = (product: Product) => {
     if (favoriteProducts.some((fav) => fav.id === product.id)) {
@@ -113,7 +126,9 @@ const PerfumePage: React.FC = () => {
   }
 
   if (!product) {
-    return <div className="text-center text-gray-600">{t('product.not_found')}</div>;
+    return (
+      <div className="text-center text-gray-600">{t("product.not_found")}</div>
+    );
   }
 
   const totalPrice = product.cost * selectedML;
@@ -125,7 +140,7 @@ const PerfumePage: React.FC = () => {
         {/* Навигация */}
         <nav className="mb-5 text-gray-500 text-sm">
           <Link to="/" className="hover:text-yellow-600">
-          {t('navigation.home')}
+            {t("navigation.home")}
           </Link>{" "}
           /<span className="text-gray-700"> {product.name}</span>
         </nav>
@@ -135,7 +150,7 @@ const PerfumePage: React.FC = () => {
           <div className="relative min-h-[400px] flex flex-col md:flex-row items-start justify-between bg-white rounded-xl shadow-lg overflow-hidden mb-10">
             {/* Бейдж */}
             <div className="absolute top-4 left-4 bg-yellow-600 text-white text-sm font-semibold py-1 px-3 rounded-full shadow-md">
-            {t('product.full_volume')}
+              {t("product.full_volume")}
             </div>
 
             <div
@@ -170,7 +185,7 @@ const PerfumePage: React.FC = () => {
                 </div>
 
                 <p className="text-lg leading-6 text-gray-500 mt-2">
-                  {product.description}
+                  {description}
                 </p>
                 <div className="space-y-2 mt-2">
                   <p>
@@ -185,10 +200,10 @@ const PerfumePage: React.FC = () => {
 
               <div className="flex items-center gap-3 mt-5">
                 <Button
-                  className="w-full md:w-[300px] flex items-center justify-center gap-3 bg-green-600 border-green-400 text-white py-2 hover:bg-green-700"
+                  className="w-full md:w-auto flex items-center justify-center gap-3 bg-green-600 border-green-400 text-sm md:text-base text-white py-2 hover:bg-green-700"
                   onClick={whatsappMessage}
                 >
-                  {t('product.contact_whatsapp')}
+                  {t("product.contact_whatsapp")}
                   <img src={whatsapp} alt="whatsapp logo" width={24} />
                 </Button>
               </div>
@@ -227,60 +242,58 @@ const PerfumePage: React.FC = () => {
                 </h1>
 
                 <h2 className="text-2xl font-semibold text-gray-900">
-                  {totalPrice} KZT {t('product.per_ml_for', { ml: selectedML })}
+                  {totalPrice} KZT {t("product.per_ml_for", { ml: selectedML })}
                   <p className="text-sm text-gray-500">
-                    {t('product.price_per_ml')}: {pricePerML} KZT
+                    {t("product.price_per_ml")}: {pricePerML} KZT
                   </p>
                 </h2>
 
-                <p className="text-lg leading-6 text-gray-500">
-                  {product.description}
-                </p>
+                <p className="text-lg leading-6 text-gray-500">{description}</p>
                 <div className="space-y-2">
                   <p>
-                    <strong>{t('product.country')}:</strong> {product.country}
+                    <strong>{t("product.country")}:</strong> {product.country}
                   </p>
                 </div>
               </div>
 
               <div className="space-y-4 mt-4">
-  <div>
-        <strong>{t('product.select_quantity')}:</strong>
-        <div className="flex gap-4 mt-2">
-          {[1, 10, 15, 20, 30].map((ml) => (
-            <label
-              key={ml}
-              className="flex flex-wrap items-center gap-2 cursor-pointer group relative"
-            >
-              <input
-                type="checkbox"
-                checked={selectedML === ml}
-                onChange={() => handleMLSelection(ml)}
-                className="peer hidden"
-              />
-              <span
-                className={`h-6 w-6 border-2 rounded-md flex items-center justify-center transition-all duration-300 ${
-                  selectedML === ml ? 'bg-yellow-600' : 'bg-white'
-                }`}
-              >
-                {selectedML === ml && (
-                  <span className="h-5 w-5">
-                    <CheckIcon color="white" />
-                  </span>
-                )}
-              </span>
-              <span className="tracking-tighter">{ml} МЛ</span>
-            </label>
-          ))}
-        </div>
-      </div>
-    </div>
-          <div className="flex items-center gap-3 mt-5">
+                <div>
+                  <strong>{t("product.select_quantity")}:</strong>
+                  <div className="flex gap-4 mt-2">
+                    {[1, 10, 15, 20, 30].map((ml) => (
+                      <label
+                        key={ml}
+                        className="flex flex-wrap items-center gap-2 cursor-pointer group relative"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedML === ml}
+                          onChange={() => handleMLSelection(ml)}
+                          className="peer hidden"
+                        />
+                        <span
+                          className={`h-6 w-6 border-2 rounded-md flex items-center justify-center transition-all duration-300 ${
+                            selectedML === ml ? "bg-yellow-600" : "bg-white"
+                          }`}
+                        >
+                          {selectedML === ml && (
+                            <span className="h-5 w-5">
+                              <CheckIcon color="white" />
+                            </span>
+                          )}
+                        </span>
+                        <span className="tracking-tighter">{ml} МЛ</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 mt-5">
                 <Button
-                  className="w-full md:w-[250px] flex items-center justify-center gap-3 bg-green-600 border-green-400 text-white py-2 hover:bg-green-700"
+                  className="w-full md:w-auto flex items-center justify-center gap-3 bg-green-600 border-green-400 text-sm md:text-base text-white py-2 hover:bg-green-700"
                   onClick={whatsappMessage}
                 >
-                  {t('product.contact_whatsapp')}
+                  {t("product.contact_whatsapp")}
                   <img src={whatsapp} alt="whatsapp logo" width={24} />
                 </Button>
               </div>
@@ -291,7 +304,7 @@ const PerfumePage: React.FC = () => {
         {/* Рекомендуемые парфюмы */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4">
-            {t('product.related_perfumes')}
+            {t("product.related_perfumes")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {otherPerfumes.map((product, index) => (
@@ -319,13 +332,11 @@ const PerfumePage: React.FC = () => {
 
                 <div className="flex flex-col items-start gap-1">
                   <p className="text-gray-700 text-sm">
-                    <strong>{t('product.price_label')}:</strong> {product.cost} KZT{" "}
-                    {sheetName === "spilled" && t('product.per_ml')}
+                    <strong>{t("product.price_label")}:</strong> {product.cost}{" "}
+                    KZT {sheetName === "spilled" && t("product.per_ml")}
                   </p>
-                  <div
-                    className="relative text-xs text-yellow-600 transition-colors"
-                  >
-                    {t('product.click_to_view')}
+                  <div className="relative text-xs text-yellow-600 transition-colors">
+                    {t("product.click_to_view")}
                     <span className="absolute left-0 bottom-0 h-[1px] w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                   </div>
                 </div>

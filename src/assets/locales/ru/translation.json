@@ -1,4 +1,5 @@
 {
+  "language": "ru",
   "catalog": {
     "title": "Каталог товаров",
     "searchPlaceholder": "Поиск по названию...",
