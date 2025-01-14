@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/aera-gallery/static/css/main.7e417c20.css",
-    "main.js": "/aera-gallery/static/js/main.f7aadc7e.js",
+    "main.css": "/aera-gallery/static/css/main.5c81a009.css",
+    "main.js": "/aera-gallery/static/js/main.5d89855c.js",
     "static/js/453.269f0334.chunk.js": "/aera-gallery/static/js/453.269f0334.chunk.js",
     "static/media/about.webp": "/aera-gallery/static/media/about.6ed82b5861df2b3d706c.webp",
     "static/media/Instagram_logo_2016.svg.webp": "/aera-gallery/static/media/Instagram_logo_2016.svg.3090db40fa34a1e434a6.webp",
@@ -10,12 +10,12 @@
     "static/media/logoM.png": "/aera-gallery/static/media/logoM.b21d6a269611a1de5388.png",
     "static/media/logoM-white.png": "/aera-gallery/static/media/logoM-white.d02d0d8277dcb9ff7040.png",
     "index.html": "/aera-gallery/index.html",
-    "main.7e417c20.css.map": "/aera-gallery/static/css/main.7e417c20.css.map",
-    "main.f7aadc7e.js.map": "/aera-gallery/static/js/main.f7aadc7e.js.map",
+    "main.5c81a009.css.map": "/aera-gallery/static/css/main.5c81a009.css.map",
+    "main.5d89855c.js.map": "/aera-gallery/static/js/main.5d89855c.js.map",
     "453.269f0334.chunk.js.map": "/aera-gallery/static/js/453.269f0334.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e417c20.css",
-    "static/js/main.f7aadc7e.js"
+    "static/css/main.5c81a009.css",
+    "static/js/main.5d89855c.js"
   ]
 }
