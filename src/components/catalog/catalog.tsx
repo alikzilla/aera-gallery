@@ -61,7 +61,7 @@ function Catalog() {
               descriptionKz: row[5],
               country: row[6],
               volume: row[7],
-              type: sheetname
+              type: sheetname,
             })
           );
           setProducts(formattedProducts);
@@ -209,8 +209,8 @@ function Catalog() {
   return (
     <section className="mb-5 pt-9" id="catalog">
       <Container>
-      <h1 className="text-3xl font-bold mb-6">{t('catalog.title')}</h1>
-      {/* Tabs for switching between sheets */}
+        <h1 className="text-3xl font-bold mb-6">{t("catalog.title")}</h1>
+        {/* Tabs for switching between sheets */}
         <div className="mb-4 flex justify-center relative">
           {/* Highlight bar for active tab */}
           <div
@@ -223,66 +223,74 @@ function Catalog() {
                   : "translateX(50%)",
             }}
           ></div>
-        <button
-          className={`w-full p-3 border border-t border-l rounded-l-lg ${
-            sheetname === "original" ? "text-black" : "bg-white"
-          } transition-colors duration-300`}
-          onClick={() => handleTabChange("original")}
-        >
-          {t('tabs.fullVolume')}
-        </button>
-        <button
-          className={`w-full p-3 border border-t border-r rounded-r-lg ${
-            sheetname === "spilled" ? "text-black" : "bg-white"
-          } transition-colors duration-300`}
-          onClick={() => handleTabChange("spilled")}
-        >
-          {t('tabs.spilled')}
-        </button>
+          <button
+            className={`w-full p-3 border border-t border-l rounded-l-lg ${
+              sheetname === "original" ? "text-black" : "bg-white"
+            } transition-colors duration-300`}
+            onClick={() => handleTabChange("original")}
+          >
+            {t("tabs.fullVolume")}
+          </button>
+          <button
+            className={`w-full p-3 border border-t border-r rounded-r-lg ${
+              sheetname === "spilled" ? "text-black" : "bg-white"
+            } transition-colors duration-300`}
+            onClick={() => handleTabChange("spilled")}
+          >
+            {t("tabs.spilled")}
+          </button>
         </div>
 
         <div className="mb-4">
-        <input
-          type="text"
-          placeholder={t('catalog.searchPlaceholder')}
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-        />
+          <input
+            type="text"
+            placeholder={t("catalog.searchPlaceholder")}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          />
         </div>
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           {/* Search and Brand Filter */}
           <div className="flex gap-4 items-center">
-            <div>
-              <label className="mr-2 font-medium text-gray-700">Бренд:</label>
-              <select
-                onChange={handleBrandChange}
-                className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              >
-              <option>{t('catalog.allBrands')}</option>
+            <label className="font-medium text-gray-700">Бренд:</label>
+            <select
+              onChange={handleBrandChange}
+              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+              <option>{t("catalog.allBrands")}</option>
               {brands.map((brand, index) => (
                 <option key={index} value={brand}>
                   {brand}
                 </option>
               ))}
             </select>
-            </div>
           </div>
 
           {/* Sorting Options */}
           <div className="flex items-center gap-4">
-          <label className="font-medium text-gray-700">{t('catalog.sort')}</label>
-          <select
-            onChange={handleSortChange}
-            value={sortOption}
-            className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          >
-          <option value="name-asc">{t('catalog.sortOptions.nameAsc')}</option>
-          <option value="name-desc">{t('catalog.sortOptions.nameDesc')}</option>
-          <option value="price-asc">{t('catalog.sortOptions.priceAsc')}</option>
-          <option value="price-desc">{t('catalog.sortOptions.priceDesc')}</option>
-        </select>
+            <label className="font-medium text-gray-700">
+              {t("catalog.sort")}
+            </label>
+            <select
+              onChange={handleSortChange}
+              value={sortOption}
+              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+              <option value="name-asc">
+                {t("catalog.sortOptions.nameAsc")}
+              </option>
+              <option value="name-desc">
+                {t("catalog.sortOptions.nameDesc")}
+              </option>
+              <option value="price-asc">
+                {t("catalog.sortOptions.priceAsc")}
+              </option>
+              <option value="price-desc">
+                {t("catalog.sortOptions.priceDesc")}
+              </option>
+            </select>
           </div>
         </div>
 
@@ -301,7 +309,8 @@ function Catalog() {
                     className="h-[300px] rounded-md mb-4"
                   />
                   <h3 className="w-full text-lg text-left font-semibold">
-                    {t(`products.${product.name}`, product.name)} {/* Translates product names */}
+                    {t(`products.${product.name}`, product.name)}{" "}
+                    {/* Translates product names */}
                   </h3>
                 </div>
 
