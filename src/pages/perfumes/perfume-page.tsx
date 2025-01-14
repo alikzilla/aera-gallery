@@ -7,8 +7,10 @@ import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { FavoriteContext } from "../../components/favorites/favorites";
 import { Product } from "../../types/product";
+import { useTranslation } from "react-i18next";
 
 const PerfumePage: React.FC = () => {
+  const { t } = useTranslation();
   const { id, sheetName } = useParams<{ id: string; sheetName: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [otherPerfumes, setOtherPerfumes] = useState<Product[]>([]);
@@ -111,7 +113,7 @@ const PerfumePage: React.FC = () => {
   }
 
   if (!product) {
-    return <div className="text-center text-gray-600">Товар не найден</div>;
+    return <div className="text-center text-gray-600">{t('product.not_found')}</div>;
   }
 
   const totalPrice = product.cost * selectedML;
@@ -123,7 +125,7 @@ const PerfumePage: React.FC = () => {
         {/* Навигация */}
         <nav className="mb-5 text-gray-500 text-sm">
           <Link to="/" className="hover:text-yellow-600">
-            Главная
+          {t('navigation.home')}
           </Link>{" "}
           /<span className="text-gray-700"> {product.name}</span>
         </nav>
@@ -133,7 +135,7 @@ const PerfumePage: React.FC = () => {
           <div className="relative min-h-[400px] flex flex-col md:flex-row items-start justify-between bg-white rounded-xl shadow-lg overflow-hidden mb-10">
             {/* Бейдж */}
             <div className="absolute top-4 left-4 bg-yellow-600 text-white text-sm font-semibold py-1 px-3 rounded-full shadow-md">
-              Полный объем
+            {t('product.full_volume')}
             </div>
 
             <div
@@ -172,7 +174,7 @@ const PerfumePage: React.FC = () => {
                 </p>
                 <div className="space-y-2 mt-2">
                   <p>
-                    <strong>Страна:</strong> {product.country}
+                    <strong>{t("product.country")}:</strong> {product.country}
                   </p>
                 </div>
 
@@ -183,10 +185,10 @@ const PerfumePage: React.FC = () => {
 
               <div className="flex items-center gap-3 mt-5">
                 <Button
-                  className="w-full md:w-[250px] flex items-center justify-center gap-3 bg-green-600 border-green-400 text-white py-2 hover:bg-green-700"
+                  className="w-full md:w-[300px] flex items-center justify-center gap-3 bg-green-600 border-green-400 text-white py-2 hover:bg-green-700"
                   onClick={whatsappMessage}
                 >
-                  Связаться в WhatsApp
+                  {t('product.contact_whatsapp')}
                   <img src={whatsapp} alt="whatsapp logo" width={24} />
                 </Button>
               </div>
@@ -225,9 +227,9 @@ const PerfumePage: React.FC = () => {
                 </h1>
 
                 <h2 className="text-2xl font-semibold text-gray-900">
-                  {totalPrice} KZT за {selectedML} МЛ
+                  {totalPrice} KZT {t('product.per_ml_for', { ml: selectedML })}
                   <p className="text-sm text-gray-500">
-                    Цена за 1 МЛ: {pricePerML} KZT
+                    {t('product.price_per_ml')}: {pricePerML} KZT
                   </p>
                 </h2>
 
@@ -236,50 +238,49 @@ const PerfumePage: React.FC = () => {
                 </p>
                 <div className="space-y-2">
                   <p>
-                    <strong>Страна:</strong> {product.country}
+                    <strong>{t('product.country')}:</strong> {product.country}
                   </p>
                 </div>
               </div>
 
               <div className="space-y-4 mt-4">
-                <div>
-                  <strong>Выберите количество (МЛ):</strong>
-                  <div className="flex gap-4 mt-2">
-                    {[1, 10, 15, 20, 30].map((ml) => (
-                      <label
-                        key={ml}
-                        className="flex flex-wrap items-center gap-2 cursor-pointer group relative"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={selectedML === ml}
-                          onChange={() => handleMLSelection(ml)}
-                          className="peer hidden"
-                        />
-                        <span
-                          className={`h-6 w-6 border-2 rounded-md flex items-center justify-center transition-all duration-300 ${
-                            selectedML === ml ? "bg-yellow-600" : "bg-white"
-                          }`}
-                        >
-                          {selectedML === ml && (
-                            <span className="h-5 w-5">
-                              <CheckIcon color="white" />
-                            </span>
-                          )}
-                        </span>
-                        <span className="tracking-tighter	">{ml} МЛ</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 mt-5">
+  <div>
+        <strong>{t('product.select_quantity')}:</strong>
+        <div className="flex gap-4 mt-2">
+          {[1, 10, 15, 20, 30].map((ml) => (
+            <label
+              key={ml}
+              className="flex flex-wrap items-center gap-2 cursor-pointer group relative"
+            >
+              <input
+                type="checkbox"
+                checked={selectedML === ml}
+                onChange={() => handleMLSelection(ml)}
+                className="peer hidden"
+              />
+              <span
+                className={`h-6 w-6 border-2 rounded-md flex items-center justify-center transition-all duration-300 ${
+                  selectedML === ml ? 'bg-yellow-600' : 'bg-white'
+                }`}
+              >
+                {selectedML === ml && (
+                  <span className="h-5 w-5">
+                    <CheckIcon color="white" />
+                  </span>
+                )}
+              </span>
+              <span className="tracking-tighter">{ml} МЛ</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+          <div className="flex items-center gap-3 mt-5">
                 <Button
                   className="w-full md:w-[250px] flex items-center justify-center gap-3 bg-green-600 border-green-400 text-white py-2 hover:bg-green-700"
                   onClick={whatsappMessage}
                 >
-                  Связаться в WhatsApp
+                  {t('product.contact_whatsapp')}
                   <img src={whatsapp} alt="whatsapp logo" width={24} />
                 </Button>
               </div>
@@ -290,7 +291,7 @@ const PerfumePage: React.FC = () => {
         {/* Рекомендуемые парфюмы */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-4">
-            Посмотрите также эти парфюмы
+            {t('product.related_perfumes')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {otherPerfumes.map((product, index) => (
@@ -318,13 +319,13 @@ const PerfumePage: React.FC = () => {
 
                 <div className="flex flex-col items-start gap-1">
                   <p className="text-gray-700 text-sm">
-                    <strong>Цена:</strong> {product.cost} KZT{" "}
-                    {sheetName === "spilled" && "за МЛ"}
+                    <strong>{t('product.price_label')}:</strong> {product.cost} KZT{" "}
+                    {sheetName === "spilled" && t('product.per_ml')}
                   </p>
                   <div
                     className="relative text-xs text-yellow-600 transition-colors"
                   >
-                    Нажмите чтобы посмотреть
+                    {t('product.click_to_view')}
                     <span className="absolute left-0 bottom-0 h-[1px] w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                   </div>
                 </div>

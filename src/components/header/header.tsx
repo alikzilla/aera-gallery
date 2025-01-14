@@ -7,11 +7,13 @@ import { HeartIcon } from "@heroicons/react/24/outline";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FavoriteContext } from "../favorites/favorites";
 import { Product } from "../../types/product";
+import { useTranslation } from 'react-i18next';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showFavoriteWindow, setShowFavoriteWindow] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const { favoriteProducts, clearFavorites } = useContext(FavoriteContext);
 
@@ -47,11 +49,11 @@ const Header: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []); 
-  
+
   const whatsappMessage = (products: Product[]) => {
     const phoneNumber = "77780547007";
     if (products.length === 0) {
-      alert("Ваш список избранных товаров пуст.");
+      alert(t('header.empty_favorites'));
       return;
     }
 
@@ -59,12 +61,12 @@ const Header: React.FC = () => {
       .map(
         (product, index) =>
           `${index + 1}. ${product.name} - ${product.cost} KZT ${
-            !product.volume ? "за МЛ" : ""
+            !product.volume ? t('header.per_ml') : ""
           }`
       )
       .join("\n");
 
-    const finalMessage = `Здравствуйте! Я заинтересован в следующих товарах:\n${message}`;
+    const finalMessage = `${t('header.greeting')}:\n${message}`;
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       finalMessage
     )}`;
@@ -98,21 +100,21 @@ const Header: React.FC = () => {
                 to="/"
                 className="relative group hover:text-yellow-600 transition-colors"
               >
-                Главная
+                {t('header.home')}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
               <Link
                 to="/about"
                 className="relative group hover:text-yellow-600 transition-colors"
               >
-                О нас
+                {t('header.about')}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
               <Link
                 to="/contacts"
                 className="relative group hover:text-yellow-600 transition-colors"
               >
-                Контакты
+                {t('header.contacts')}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
             </nav>
@@ -139,7 +141,7 @@ const Header: React.FC = () => {
                   onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
-                  Главная
+                  {t('header.home')}
                   <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                 </Link>
                 <Link
@@ -147,7 +149,7 @@ const Header: React.FC = () => {
                   onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
-                  О нас
+                  {t('header.about')}
                   <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                 </Link>
                 <Link
@@ -155,7 +157,7 @@ const Header: React.FC = () => {
                   onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
-                  Контакты
+                  {t('header.contacts')}
                   <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                 </Link>
               </nav>
@@ -195,7 +197,7 @@ const Header: React.FC = () => {
       >
         <div className="flex justify-between items-center p-4">
           <h2 className="text-2xl font-bold text-block">
-            Ваши избранные товары
+            {t('header.favorite_products')}
           </h2>
           <button
             onClick={() => setShowFavoriteWindow(false)}
@@ -228,7 +230,7 @@ const Header: React.FC = () => {
                       </Link>
                       <br />
                       <span className="text-sm text-gray-500">
-                        Цена: {product.cost} KZT {!product.volume && "за МЛ"}
+                        {t('header.price')}: {product.cost} KZT {!product.volume && t('header.per_ml')}
                       </span>
                     </div>
                   </div>
@@ -236,28 +238,28 @@ const Header: React.FC = () => {
               ))
             ) : (
               <p className="text-gray-500 text-center">
-                У вас нет избранных товаров.
+                {t('header.no_favorite_products')}
               </p>
             )}
           </ul>
           <div className="flex flex-col mb-20">
             <div className="mt-4">
               <p className="text-lg">
-                <strong>Общая стоимость:</strong> {totalPrice} KZT
+                <strong>{t('header.total_cost')}:</strong> {totalPrice} KZT
               </p>
             </div>
             <Button
               className="mt-3 w-full flex items-center justify-center gap-3 hover:bg-green-700 hover:border-green-400"
               onClick={() => whatsappMessage(favoriteProducts)}
             >
-              Связаться в WhatsApp
+              {t('header.contact_via_whatsapp')}
               <img src={whatsapp} alt="whatsapp logo" width={30} />
             </Button>
             <Button
               onClick={clearFavorites}
               className="mt-3 w-full flex items-center justify-center gap-3 hover:bg-red-700 hover:border-red-400"
             >
-              Очистить избранное
+              {t('header.clear_favorites')}
             </Button>
           </div>
         </div>
