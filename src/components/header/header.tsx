@@ -7,7 +7,7 @@ import { HeartIcon } from "@heroicons/react/24/outline";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FavoriteContext } from "../favorites/favorites";
 import { Product } from "../../types/product";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,12 +48,12 @@ const Header: React.FC = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); 
+  }, []);
 
   const whatsappMessage = (products: Product[]) => {
     const phoneNumber = "77780547007";
     if (products.length === 0) {
-      alert(t('header.empty_favorites'));
+      alert(t("header.empty_favorites"));
       return;
     }
 
@@ -61,12 +61,12 @@ const Header: React.FC = () => {
       .map(
         (product, index) =>
           `${index + 1}. ${product.name} - ${product.cost} KZT ${
-            !product.volume ? t('header.per_ml') : ""
+            !product.volume ? t("header.per_ml") : ""
           }`
       )
       .join("\n");
 
-    const finalMessage = `${t('header.greeting')}:\n${message}`;
+    const finalMessage = `${t("header.greeting")}:\n${message}`;
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       finalMessage
     )}`;
@@ -100,21 +100,21 @@ const Header: React.FC = () => {
                 to="/"
                 className="relative group hover:text-yellow-600 transition-colors"
               >
-                {t('header.home')}
+                {t("header.home")}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
               <Link
                 to="/about"
                 className="relative group hover:text-yellow-600 transition-colors"
               >
-                {t('header.about')}
+                {t("header.about")}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
               <Link
                 to="/contacts"
                 className="relative group hover:text-yellow-600 transition-colors"
               >
-                {t('header.contacts')}
+                {t("header.contacts")}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
               </Link>
             </nav>
@@ -141,7 +141,7 @@ const Header: React.FC = () => {
                   onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
-                  {t('header.home')}
+                  {t("header.home")}
                   <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                 </Link>
                 <Link
@@ -149,7 +149,7 @@ const Header: React.FC = () => {
                   onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
-                  {t('header.about')}
+                  {t("header.about")}
                   <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                 </Link>
                 <Link
@@ -157,7 +157,7 @@ const Header: React.FC = () => {
                   onClick={() => setIsOpen(false)}
                   className="relative group hover:text-yellow-600 transition-colors py-2"
                 >
-                  {t('header.contacts')}
+                  {t("header.contacts")}
                   <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                 </Link>
               </nav>
@@ -173,8 +173,13 @@ const Header: React.FC = () => {
               <div className="relative">
                 <HeartIcon
                   className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500"
-                  onClick={() => handleFavoriteWindowrOpen()} // Toggle favorite window
+                  onClick={() => handleFavoriteWindowrOpen()}
                 />
+                {favoriteProducts.length > 0 && (
+                  <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-red-500 text-white font-bold text-xs flex items-center justify-center">
+                    {favoriteProducts.length}
+                  </span>
+                )}
               </div>
 
               <LanguageSelector />
@@ -197,7 +202,7 @@ const Header: React.FC = () => {
       >
         <div className="flex justify-between items-center p-4">
           <h2 className="text-2xl font-bold text-block">
-            {t('header.favorite_products')}
+            {t("header.favorite_products")}
           </h2>
           <button
             onClick={() => setShowFavoriteWindow(false)}
@@ -230,7 +235,8 @@ const Header: React.FC = () => {
                       </Link>
                       <br />
                       <span className="text-sm text-gray-500">
-                        {t('header.price')}: {product.cost} KZT {!product.volume && t('header.per_ml')}
+                        {t("header.price")}: {product.cost} KZT{" "}
+                        {!product.volume && t("header.per_ml")}
                       </span>
                     </div>
                   </div>
@@ -238,28 +244,28 @@ const Header: React.FC = () => {
               ))
             ) : (
               <p className="text-gray-500 text-center">
-                {t('header.no_favorite_products')}
+                {t("header.no_favorite_products")}
               </p>
             )}
           </ul>
           <div className="flex flex-col mb-20">
             <div className="mt-4">
               <p className="text-lg">
-                <strong>{t('header.total_cost')}:</strong> {totalPrice} KZT
+                <strong>{t("header.total_cost")}:</strong> {totalPrice} KZT
               </p>
             </div>
             <Button
               className="mt-3 w-full flex items-center justify-center gap-3 hover:bg-green-700 hover:border-green-400"
               onClick={() => whatsappMessage(favoriteProducts)}
             >
-              {t('header.contact_via_whatsapp')}
+              {t("header.contact_via_whatsapp")}
               <img src={whatsapp} alt="whatsapp logo" width={30} />
             </Button>
             <Button
               onClick={clearFavorites}
               className="mt-3 w-full flex items-center justify-center gap-3 hover:bg-red-700 hover:border-red-400"
             >
-              {t('header.clear_favorites')}
+              {t("header.clear_favorites")}
             </Button>
           </div>
         </div>

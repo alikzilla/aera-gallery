@@ -34,37 +34,32 @@ const PerfumePage: React.FC = () => {
 
         if (data.values) {
           const rows = data.values.slice(1);
-          const foundProduct = rows.find((row: string[]) => row[0] === id);
+
+          const perfumes = rows.map((row: string[], index: number) => ({
+            id: index + 1,
+            name: row[0],
+            unit: row[1],
+            cost: parseFloat(row[2]),
+            url: row[3],
+            description: row[4],
+            descriptionKz: row[5],
+            country: row[6],
+            volume: row[7],
+          }));
+
+          const foundProduct = perfumes.find(
+            (perfume: Product) => perfume.id === Number(id)
+          );
 
           if (foundProduct) {
-            setProduct({
-              id: foundProduct[0],
-              name: foundProduct[0],
-              unit: foundProduct[1],
-              cost: parseFloat(foundProduct[2]),
-              url: foundProduct[3],
-              description: foundProduct[4],
-              descriptionKz: foundProduct[5],
-              country: foundProduct[6],
-              volume: foundProduct[7],
-            });
+            setProduct(foundProduct);
+            setDescription(foundProduct.description);
           }
 
-          setDescription(foundProduct[4]);
-
-          const randomPerfumes = rows
-            .filter((row: string[]) => row[0] !== id)
+          const randomPerfumes = perfumes
+            .filter((perfume: Product) => perfume.id !== Number(id))
             .sort(() => 0.5 - Math.random())
-            .slice(0, 5)
-            .map((row: string[]) => ({
-              name: row[0],
-              unit: row[1],
-              cost: parseFloat(row[2]),
-              url: row[3],
-              description: row[4],
-              country: row[6],
-              volume: row[7],
-            }));
+            .slice(0, 5);
 
           setOtherPerfumes(randomPerfumes);
         }
@@ -79,7 +74,6 @@ const PerfumePage: React.FC = () => {
   }, [id, sheetName]);
 
   useEffect(() => {
-    // Scroll to top when the component is mounted
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [product]);
 
@@ -109,7 +103,6 @@ const PerfumePage: React.FC = () => {
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
-    //https://wa.me/77780547007?text=Здравствуйте!%20Я%20заинтересован%20в%20товаре:%20AFNAN%20SUPREMACY%20SILVER,%20стоимость:%2032000%20KZT
     window.open(whatsappUrl, "_blank");
   };
 
@@ -309,7 +302,7 @@ const PerfumePage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {otherPerfumes.map((product, index) => (
               <Link
-                to={`/perfumes/${sheetName}/${product.name}`}
+                to={`/perfumes/${sheetName}/${product.id}`}
                 className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300"
                 key={index}
               >

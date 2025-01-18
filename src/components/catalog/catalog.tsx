@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Button, Loader } from "../";
-import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
-import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 import { Product } from "../../types/product";
-import { FavoriteContext } from "../favorites/favorites";
 import { useTranslation } from "react-i18next";
 
 function Catalog() {
@@ -18,8 +15,6 @@ function Catalog() {
   const [sortOption, setSortOption] = useState<string>("name-asc");
 
   const { t } = useTranslation();
-  const { favoriteProducts, addFavoriteProduct, removeFavoriteProduct } =
-    useContext(FavoriteContext);
 
   const updateItemsPerPage = () => {
     const width = window.innerWidth;
@@ -136,17 +131,10 @@ function Catalog() {
     setSortOption(event.target.value);
   };
 
-  const handleFavoriteClick = (product: Product) => {
-    if (favoriteProducts.some((fav) => fav.id === product.id)) {
-      removeFavoriteProduct(product.id);
-    } else {
-      addFavoriteProduct(product);
-    }
-  };
-
   const filteredProducts = products.filter((product) => {
     const matchesBrand = selectedBrand
-      ? getBrandFromName(product.name) === selectedBrand
+      ? getBrandFromName(product.name.toLowerCase()) ===
+        selectedBrand.toLowerCase()
       : true;
     const matchesSearchQuery = product.name
       .toLowerCase()
@@ -205,6 +193,8 @@ function Catalog() {
       }, 50);
     }
   };
+
+  console.log(products);
 
   return (
     <section className="mb-5 pt-9" id="catalog">
@@ -298,7 +288,7 @@ function Catalog() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {currentProducts.map((product, index) => (
               <Link
-                to={`/perfumes/${sheetname}/${product.name}`}
+                to={`/perfumes/${sheetname}/${product.id}`}
                 className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300"
                 key={index}
               >
