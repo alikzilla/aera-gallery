@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Import Autoplay module
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 const Hero = () => {
@@ -9,14 +9,13 @@ const Hero = () => {
         pagination={{ clickable: true }}
         loop={true}
         autoplay={{
-          delay: 3000, 
-          disableOnInteraction: false, 
+          delay: 3000,
+          disableOnInteraction: false,
         }}
-        speed={800} 
+        speed={800}
         modules={[Autoplay]}
         className="w-full"
       >
-        {/* Slide 1 */}
         <SwiperSlide>
           <img
             src="https://visagehall.ru/upload/resize_cache/webp/iblock/038/mci81vpsuaj7m6znje5b749990rfsdul.webp"
@@ -24,7 +23,6 @@ const Hero = () => {
             className="w-full object-cover"
           />
         </SwiperSlide>
-        {/* Slide 2 */}
         <SwiperSlide>
           <img
             src="https://visagehall.ru/upload/resize_cache/webp/uf/ee5/f403szm2j9zqga4hu1ecayjhzlu5tyv5.webp"
@@ -32,7 +30,6 @@ const Hero = () => {
             className="w-full object-cover"
           />
         </SwiperSlide>
-        {/* Slide 3 */}
         <SwiperSlide>
           <img
             src="https://visagehall.ru/upload/resize_cache/webp/resize_cache/uf/e8c/1920_1080_0/gdrd5vwmdbnoyad0s7oiolk7rim344tc.webp"
@@ -40,7 +37,6 @@ const Hero = () => {
             className="w-full object-cover"
           />
         </SwiperSlide>
-        {/* Slide 4 */}
         <SwiperSlide>
           <img
             src="https://visagehall.ru/upload/resize_cache/webp/resize_cache/uf/200/1920_1080_0/w6ueu7tidtrixt6b4emv43zh2ymlfah1.webp"
@@ -48,7 +44,6 @@ const Hero = () => {
             className="w-full object-cover"
           />
         </SwiperSlide>
-        {/* Slide 5 */}
         <SwiperSlide>
           <img
             src="https://visagehall.ru/upload/resize_cache/webp/resize_cache/uf/e20/1920_1080_0/kwgnqysbql954qkuputy0p6x072vc4hy.webp"

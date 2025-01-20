@@ -1,6 +1,6 @@
 export {};
 
-export interface Product {
+export interface PerfumeProps {
   id: number;
   name: string;
   cost: number;

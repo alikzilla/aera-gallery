@@ -1,42 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Container, LanguageSelector } from "../";
+
 import logo from "../../assets/logoM.png";
-import whatsapp from "../../assets/WhatsApp.svg.webp";
-import { Container, LanguageSelector, Button } from "../";
+
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { FavoriteContext } from "../favorites/favorites";
-import { Product } from "../../types/product";
-import { useTranslation } from "react-i18next";
 
 const Header: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showFavoriteWindow, setShowFavoriteWindow] = useState(false);
-  const { t, i18n } = useTranslation();
-
-  const { favoriteProducts, clearFavorites } = useContext(FavoriteContext);
-
-  const totalPrice = favoriteProducts.reduce(
-    (total, product) => total + product.cost,
-    0
-  );
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,28 +25,26 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  const whatsappMessage = (products: Product[]) => {
-    const phoneNumber = "77780547007";
-    if (products.length === 0) {
-      alert(t("header.empty_favorites"));
-      return;
-    }
-
-    const message = products
-      .map(
-        (product, index) =>
-          `${index + 1}. ${product.name} - ${product.cost} KZT ${
-            !product.volume ? t("header.per_ml") : ""
-          }`
-      )
-      .join("\n");
-
-    const finalMessage = `${t("header.greeting")}:\n${message}`;
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      finalMessage
-    )}`;
-    window.open(whatsappUrl, "_blank");
-  };
+  // const whatsappMessage = (products: Product[]) => {
+  //   const phoneNumber = "77780547007";
+  //   if (products.length === 0) {
+  //     alert(t("header.empty_favorites"));
+  //     return;
+  //   }
+  //   const message = products
+  //     .map(
+  //       (product, index) =>
+  //         `${index + 1}. ${product.name} - ${product.cost} KZT ${
+  //           !product.volume ? t("header.per_ml") : ""
+  //         }`
+  //     )
+  //     .join("\n");
+  //   const finalMessage = `${t("header.greeting")}:\n${message}`;
+  //   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+  //     finalMessage
+  //   )}`;
+  //   window.open(whatsappUrl, "_blank");
+  // };
 
   const handleGamburgerOpen = () => {
     setIsOpen(!isOpen);
@@ -86,11 +59,7 @@ const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`w-full fixed z-10 h-[60px] transition-all duration-300 ${
-          isScrolled
-            ? "backdrop-blur-lg bg-white bg-opacity-80"
-            : "bg-transparent"
-        }`}
+        className={`w-full fixed z-10 h-[60px] transition-all duration-300 backdrop-blur-lg bg-white bg-opacity-80`}
       >
         <Container>
           <div className="h-full flex items-center justify-between relative">
@@ -175,11 +144,6 @@ const Header: React.FC = () => {
                   className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500"
                   onClick={() => handleFavoriteWindowrOpen()}
                 />
-                {favoriteProducts.length > 0 && (
-                  <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-red-500 text-white font-bold text-xs flex items-center justify-center">
-                    {favoriteProducts.length}
-                  </span>
-                )}
               </div>
 
               <LanguageSelector />
@@ -211,64 +175,7 @@ const Header: React.FC = () => {
             ×
           </button>
         </div>
-        <div className="p-6 w-full h-full flex flex-col justify-between">
-          <ul className="space-y-3">
-            {favoriteProducts.length > 0 ? (
-              favoriteProducts.map((product, index) => (
-                <li key={index} className="flex flex-col space-y-2">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={product.url}
-                      alt={product.name}
-                      className="w-auto h-16 object-fit rounded-md"
-                    />
-                    <div>
-                      <Link
-                        to={`/perfumes/${
-                          product.volume ? "original" : "spilled"
-                        }/${product.name}`}
-                        onClick={() => setShowFavoriteWindow(false)}
-                        className="font-bold relative group hover:text-yellow-600 transition-colors py-2"
-                      >
-                        {product.name}
-                        <span className="absolute left-0 bottom-1.5 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                      </Link>
-                      <br />
-                      <span className="text-sm text-gray-500">
-                        {t("header.price")}: {product.cost} KZT{" "}
-                        {!product.volume && t("header.per_ml")}
-                      </span>
-                    </div>
-                  </div>
-                </li>
-              ))
-            ) : (
-              <p className="text-gray-500 text-center">
-                {t("header.no_favorite_products")}
-              </p>
-            )}
-          </ul>
-          <div className="flex flex-col mb-20">
-            <div className="mt-4">
-              <p className="text-lg">
-                <strong>{t("header.total_cost")}:</strong> {totalPrice} KZT
-              </p>
-            </div>
-            <Button
-              className="mt-3 w-full flex items-center justify-center gap-3 hover:bg-green-700 hover:border-green-400"
-              onClick={() => whatsappMessage(favoriteProducts)}
-            >
-              {t("header.contact_via_whatsapp")}
-              <img src={whatsapp} alt="whatsapp logo" width={30} />
-            </Button>
-            <Button
-              onClick={clearFavorites}
-              className="mt-3 w-full flex items-center justify-center gap-3 hover:bg-red-700 hover:border-red-400"
-            >
-              {t("header.clear_favorites")}
-            </Button>
-          </div>
-        </div>
+        <div className="p-6 w-full h-full flex flex-col justify-between"></div>
       </div>
     </>
   );

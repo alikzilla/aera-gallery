@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Container, Button, Loader } from "../";
-import { Product } from "../../types/product";
 import { useTranslation } from "react-i18next";
+import { Container, Loader, Filters, PerfumeCard, Pagination } from "../";
+import { PerfumeProps } from "../../types/product";
 
 function Catalog() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<PerfumeProps[]>([]);
   const [sheetname, setSheetname] = useState<string>("original");
   const [loading, setLoading] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState<string>("");
@@ -45,7 +44,7 @@ function Catalog() {
 
         if (data.values) {
           const rows = data.values.slice(1);
-          const formattedProducts: Product[] = rows.map(
+          const formattedProducts: PerfumeProps[] = rows.map(
             (row: string[], index: number) => ({
               id: index + 1,
               name: row[0],
@@ -200,150 +199,37 @@ function Catalog() {
     <section className="mb-5 pt-9" id="catalog">
       <Container>
         <h1 className="text-3xl font-bold mb-6">{t("catalog.title")}</h1>
-        {/* Tabs for switching between sheets */}
-        <div className="mb-4 flex justify-center relative">
-          {/* Highlight bar for active tab */}
-          <div
-            className={`absolute bottom-0 h-[4px] bg-yellow-600 transition-all duration-300`}
-            style={{
-              width: "50%",
-              transform:
-                sheetname === "original"
-                  ? "translateX(-50%)"
-                  : "translateX(50%)",
-            }}
-          ></div>
-          <button
-            className={`w-full p-3 border border-t border-l rounded-l-lg ${
-              sheetname === "original" ? "text-black" : "bg-white"
-            } transition-colors duration-300`}
-            onClick={() => handleTabChange("original")}
-          >
-            {t("tabs.fullVolume")}
-          </button>
-          <button
-            className={`w-full p-3 border border-t border-r rounded-r-lg ${
-              sheetname === "spilled" ? "text-black" : "bg-white"
-            } transition-colors duration-300`}
-            onClick={() => handleTabChange("spilled")}
-          >
-            {t("tabs.spilled")}
-          </button>
-        </div>
 
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder={t("catalog.searchPlaceholder")}
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          />
-        </div>
-
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-          {/* Search and Brand Filter */}
-          <div className="flex gap-4 items-center">
-            <label className="font-medium text-gray-700">Бренд:</label>
-            <select
-              onChange={handleBrandChange}
-              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            >
-              <option>{t("catalog.allBrands")}</option>
-              {brands.map((brand, index) => (
-                <option key={index} value={brand}>
-                  {brand}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Sorting Options */}
-          <div className="flex items-center gap-4">
-            <label className="font-medium text-gray-700">
-              {t("catalog.sort")}
-            </label>
-            <select
-              onChange={handleSortChange}
-              value={sortOption}
-              className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            >
-              <option value="name-asc">
-                {t("catalog.sortOptions.nameAsc")}
-              </option>
-              <option value="name-desc">
-                {t("catalog.sortOptions.nameDesc")}
-              </option>
-              <option value="price-asc">
-                {t("catalog.sortOptions.priceAsc")}
-              </option>
-              <option value="price-desc">
-                {t("catalog.sortOptions.priceDesc")}
-              </option>
-            </select>
-          </div>
-        </div>
+        <Filters
+          sheetname={sheetname}
+          searchQuery={searchQuery}
+          brands={brands}
+          sortOption={sortOption}
+          handleTabChange={handleTabChange}
+          handleSearchChange={handleSearchChange}
+          handleBrandChange={handleBrandChange}
+          handleSortChange={handleSortChange}
+        />
 
         {!loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {currentProducts.map((product, index) => (
-              <Link
-                to={`/perfumes/${sheetname}/${product.id}`}
-                className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300"
+              <PerfumeCard
+                perfume={product}
+                sheetname={sheetname}
                 key={index}
-              >
-                <div className="w-full flex flex-col items-center justify-center">
-                  <img
-                    src={product.url}
-                    alt={product.name}
-                    className="h-[300px] rounded-md mb-4"
-                  />
-                  <h3 className="w-full text-lg text-left font-semibold">
-                    {t(`products.${product.name}`, product.name)}{" "}
-                    {/* Translates product names */}
-                  </h3>
-                </div>
-
-                <div className="absolute top-0 left-2 flex items-center gap-5 mt-2">
-                  <h2 className="bg-yellow-600 py-1 px-2 rounded-md text-white">
-                    {product.volume} {t("catalog.ml")}
-                  </h2>
-                </div>
-
-                <div>
-                  <p className="text-gray-700">
-                    <strong>{t("catalog.price")}:</strong> {product.cost} KZT{" "}
-                    {sheetname === "spilled" && t("catalog.per_ml")}
-                  </p>
-                  <div className="relative text-yellow-600 transition-colors">
-                    {t("catalog.click_to_view")}
-                    <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                  </div>
-                </div>
-              </Link>
+              />
             ))}
           </div>
         ) : (
           <Loader />
         )}
 
-        <div className="pagination flex justify-center items-center gap-4 mt-6">
-          <Button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            {t("catalog.prev")}
-          </Button>
-          <span>
-            {t("catalog.page")} {currentPage} {t("catalog.of")} {totalPages}
-          </span>
-          <Button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            {t("catalog.next")}
-          </Button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </Container>
     </section>
   );

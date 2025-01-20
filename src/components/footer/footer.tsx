@@ -1,7 +1,7 @@
 import Container from "../container/container";
 import logo from "../../assets/logoM-white.png";
-import instagramLogo from "../../assets/Instagram_logo_2016.svg.webp";
-import whatsappLogo from "../../assets/WhatsApp.svg.webp";
+import instagramLogo from "../../assets/instagram.png";
+import whatsappLogo from "../../assets/whatsapp.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
