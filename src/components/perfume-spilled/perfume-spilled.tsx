@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Button } from "..";
 
-import { PerfumeProps } from "../../types/product";
+import { PerfumeProps } from "../../types/perfume";
 
 import { CheckIcon } from "@heroicons/react/24/outline";
 import whatsapp from "../../assets/whatsapp.png";

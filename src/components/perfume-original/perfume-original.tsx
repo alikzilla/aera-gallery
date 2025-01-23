@@ -1,8 +1,12 @@
-import { useTranslation } from "react-i18next";
-import { Button } from "..";
-import whatsapp from "../../assets/whatsapp.png";
-import { PerfumeProps } from "../../types/product";
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { useFavoritesStore } from "../../hooks/use-favorites-store";
+import { Button } from "..";
+import { PerfumeProps } from "../../types/perfume";
+
+import whatsapp from "../../assets/whatsapp.png";
+import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 
 interface IPerfumeOriginalProps {
   perfume: PerfumeProps;
@@ -18,6 +22,18 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
   whatsappMessage,
 }) => {
   const { t } = useTranslation();
+  const { addToFavorites, removeFromFavorites, isFavorite } =
+    useFavoritesStore();
+
+  const isInFavorites = isFavorite(perfume.id);
+
+  const toggleFavorite = () => {
+    if (isInFavorites) {
+      removeFromFavorites(perfume.id);
+    } else {
+      addToFavorites(perfume);
+    }
+  };
 
   return (
     <div className="relative min-h-[400px] flex flex-col md:flex-row items-start justify-between bg-white rounded-xl shadow-lg overflow-hidden mb-10">
@@ -25,7 +41,7 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
         {t("product.full_volume")}
       </div>
 
-      <div className="w-full  md:w-[35%] flex justify-center items-center p-5">
+      <div className="w-full md:w-[35%] flex justify-center items-center p-5">
         <img
           src={perfume.url}
           alt={perfume.name}
@@ -58,6 +74,24 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
         </div>
 
         <div className="flex items-center gap-3 mt-5">
+          <Button
+            className={`w-full md:w-auto flex items-center justify-center gap-3 ${
+              isInFavorites
+                ? "bg-red-700 border-red-600"
+                : "bg-red-600 border-red-400"
+            } text-sm md:text-base text-white py-2 hover:bg-red-800`}
+            onClick={toggleFavorite}
+          >
+            {isInFavorites
+              ? t("product.remove_from_favorites")
+              : t("product.add_to_favorites")}
+            {isInFavorites ? (
+              <SolidHeartIcon className="h-6 w-6" />
+            ) : (
+              <OutlineHeartIcon className="h-6 w-6" />
+            )}
+          </Button>
+
           <Button
             className="w-full md:w-auto flex items-center justify-center gap-3 bg-green-600 border-green-400 text-sm md:text-base text-white py-2 hover:bg-green-700"
             onClick={whatsappMessage}

@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { PerfumeProps } from "../../types/product";
+import { PerfumeProps } from "../../types/perfume";
 
 interface IRandomPerfumesProps {
   sheetName: string | undefined;

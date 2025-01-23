@@ -10,7 +10,7 @@ import {
   PerfumeSpilled,
 } from "../../components";
 
-import type { PerfumeProps } from "../../types/product";
+import type { PerfumeProps } from "../../types/perfume";
 
 const Perfume = () => {
   const { t, i18n } = useTranslation();

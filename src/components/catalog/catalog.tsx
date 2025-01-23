@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Container, Loader, Filters, PerfumeCard, Pagination } from "../";
-import { PerfumeProps } from "../../types/product";
+import { PerfumeProps } from "../../types/perfume";
 
 function Catalog() {
   const [products, setProducts] = useState<PerfumeProps[]>([]);

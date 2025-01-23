@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { PerfumeProps } from "../../types/product";
+import { PerfumeProps } from "../../types/perfume";
 import { useTranslation } from "react-i18next";
 
 interface IPerfumeCardProps {
