@@ -35,10 +35,12 @@
     "favorite_products": "Ваши избранные товары",
     "price": "Цена",
     "per_ml": "за МЛ",
-    "no_favorite_products": "У вас нет избранных товаров.",
+    "no_favorites": "У вас нет избранных товаров.",
     "total_cost": "Общая стоимость",
     "contact_via_whatsapp": "Связаться в WhatsApp",
-    "clear_favorites": "Очистить избранное"
+    "clear_favorites": "Очистить избранное",
+    "remove": "Удалить",
+    "buy": "Купить за {{total_cost}} KZT"
   },
   "about": {
     "title": "О компании",
@@ -73,7 +75,9 @@
       "message": "Здравствуйте! Я заинтересован в товаре: {{productName}}, стоимость: {{productCost}} KZT {{additionalInfo}}",
       "select_quantity": "Выберите количество (МЛ)",
       "price_per_ml": "Цена за 1 МЛ",
-      "per_ml_for": "за {{ml}} МЛ"
+      "per_ml_for": "за {{ml}} МЛ",
+      "add_to_favorites": "Добавить в избранное",
+      "remove_from_favorites": "Удалить из избранного"
     },
     "navigation": {
       "home": "Главная",

@@ -37,21 +37,21 @@ const Header: React.FC = () => {
           <nav className="flex items-center gap-5 md:flex-row md:space-x-6 md:block hidden">
             <Link
               to="/"
-              className="relative group hover:text-yellow-600 transition-colors"
+              className="relative group hover:text-yellow-600 transition-colors active:translate-y-px"
             >
               {t("header.home")}
               <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </Link>
             <Link
               to="/about"
-              className="relative group hover:text-yellow-600 transition-colors"
+              className="relative group hover:text-yellow-600 transition-colors active:translate-y-px"
             >
               {t("header.about")}
               <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </Link>
             <Link
               to="/contacts"
-              className="relative group hover:text-yellow-600 transition-colors"
+              className="relative group hover:text-yellow-600 transition-colors active:translate-y-px"
             >
               {t("header.contacts")}
               <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
@@ -78,7 +78,7 @@ const Header: React.FC = () => {
               <Link
                 to="/"
                 onClick={() => setIsOpen(false)}
-                className="relative group hover:text-yellow-600 transition-colors py-2"
+                className="relative group hover:text-yellow-600 transition-colors py-2 active:translate-y-px"
               >
                 {t("header.home")}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
               <Link
                 to="/about"
                 onClick={() => setIsOpen(false)}
-                className="relative group hover:text-yellow-600 transition-colors py-2"
+                className="relative group hover:text-yellow-600 transition-colors py-2 active:translate-y-px"
               >
                 {t("header.about")}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
               <Link
                 to="/contacts"
                 onClick={() => setIsOpen(false)}
-                className="relative group hover:text-yellow-600 transition-colors py-2"
+                className="relative group hover:text-yellow-600 transition-colors py-2 active:translate-y-px"
               >
                 {t("header.contacts")}
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>

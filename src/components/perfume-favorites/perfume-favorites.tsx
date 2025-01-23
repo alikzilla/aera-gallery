@@ -1,7 +1,18 @@
 import React, { useState } from "react";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+
 import { useTranslation } from "react-i18next";
 import { useFavoritesStore } from "../../hooks/use-favorites-store";
+
+import Button from "../button/button";
+
+import {
+  HeartIcon,
+  ArchiveBoxXMarkIcon,
+  CreditCardIcon,
+} from "@heroicons/react/24/outline";
+import whatsapp from "../../assets/whatsapp.png";
+
 import { PerfumeProps } from "../../types/perfume";
 
 interface IPerfumeFavoritesProps {
@@ -42,11 +53,13 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
     window.open(whatsappUrl, "_blank");
   };
 
+  const totalCost = favorites.reduce((acc, fav) => acc + fav.cost, 0);
+
   return (
     <>
       <div className="relative">
         <HeartIcon
-          className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500"
+          className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500 active:translate-y-px"
           onClick={handleFavoriteWindowOpen}
         />
       </div>
@@ -59,11 +72,11 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
       )}
 
       <div
-        className={`fixed z-[50] top-0 right-0 w-full max-w-lg h-screen bg-white shadow-md overflow-hidden transition-all duration-300 ${
+        className={`fixed z-[50] top-0 bottom-0 right-0 w-full max-w-lg h-screen bg-white shadow-md overflow-hidden transition-all duration-300 ${
           showFavoriteWindow ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex justify-between items-center p-4">
+        <div className="h-[10%] flex justify-between items-center p-4">
           <h2 className="text-2xl font-bold text-black">
             {t("header.favorite_products")}
           </h2>
@@ -75,7 +88,7 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
           </button>
         </div>
 
-        <div className="p-6 w-full h-full flex flex-col justify-between">
+        <div className="p-6 w-full h-[90%] flex flex-col justify-between">
           <div className="space-y-4 overflow-y-auto">
             {favorites.length > 0 ? (
               favorites.map((perfume: PerfumeProps) => (
@@ -87,14 +100,22 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
                     <img
                       src={perfume.url}
                       alt={perfume.name}
-                      className="w-12 h-12 rounded-lg object-cover"
+                      className="w-auto h-12 rounded-lg object-cover"
                     />
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        {perfume.name}
-                      </p>
+                    <div className="flex flex-col items-start">
+                      <div className="relative">
+                        <Link
+                          to={`/perfumes/${perfume.type}/${perfume.id}`}
+                          onClick={() => setShowFavoriteWindow(false)}
+                          className="group font-semibold text-gray-800 active:text-yellow-600"
+                        >
+                          {perfume.name}
+                          <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+                        </Link>
+                      </div>
+
                       <p className="text-sm text-gray-600">
-                        {perfume.cost} KZT
+                        {perfume.cost} KZT - {perfume.volume} МЛ
                       </p>
                     </div>
                   </div>
@@ -114,19 +135,31 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
           </div>
 
           {favorites.length > 0 && (
-            <div className="mt-6">
-              <button
-                className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 mb-3"
+            <div className="flex flex-col items-center gap-3">
+              <Button className="w-full flex items-center justify-center gap-3 text-sm md:text-base py-2 active:translate-y-px">
+                <span className="flex items-center gap-1">
+                  {t("header.buy", { total_cost: totalCost })}
+                  <CreditCardIcon className="h-6 w-6" />
+                </span>
+              </Button>
+              <Button
+                className="w-full flex items-center justify-center gap-3 bg-green-600 border-green-400 text-sm md:text-base text-white py-2 hover:bg-green-800 hover:border-green-600 active:translate-y-px"
                 onClick={whatsappMessage}
               >
-                {t("header.contact_whatsapp")}
-              </button>
-              <button
-                className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700"
+                <span className="flex items-center gap-1">
+                  {t("header.contact_via_whatsapp")}
+                  <img src={whatsapp} alt="whatsapp logo" width={24} />
+                </span>
+              </Button>
+              <Button
+                className="w-full flex items-center justify-center gap-3 bg-red-600 border-red-400 text-sm md:text-base text-white py-2 hover:bg-red-800 hover:border-red-600 active:translate-y-px"
                 onClick={clearFavorites}
               >
-                {t("header.clear_favorites")}
-              </button>
+                <span className="flex items-center gap-1">
+                  {t("header.clear_favorites")}
+                  <ArchiveBoxXMarkIcon className="h-6 w-6" />
+                </span>
+              </Button>
             </div>
           )}
         </div>

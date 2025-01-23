@@ -14,7 +14,7 @@ const PerfumeCard: React.FC<IPerfumeCardProps> = ({ perfume, sheetname }) => {
   return (
     <Link
       to={`/perfumes/${sheetname}/${perfume.id}`}
-      className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300"
+      className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300 active:translate-y-px"
     >
       <div className="w-full flex flex-col items-center justify-center">
         <img

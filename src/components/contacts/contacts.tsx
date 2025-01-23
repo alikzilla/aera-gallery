@@ -34,6 +34,7 @@ const Contacts = () => {
                   to="https://www.instagram.com/aera.kz/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="active:translate-y-px"
                 >
                   <img
                     src={instagram}
@@ -45,6 +46,7 @@ const Contacts = () => {
                   to="https://wa.me/message/5R657AQ5C3E7B1"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="active:translate-y-px"
                 >
                   <img src={whatsapp} alt={t("contacts.whatsapp")} width={57} />
                 </Link>
@@ -57,6 +59,7 @@ const Contacts = () => {
                   "https://2gis.kz/astana/firm/70000001076465027?m=71.425681%2C51.095228%2F16"
                 }
                 target="_blank"
+                className="active:translate-y-px"
               >
                 <img src={map} alt={t("contacts.map")} className="rounded" />
               </Link>

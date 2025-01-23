@@ -21,7 +21,7 @@ const RandomPerfumes: React.FC<IRandomPerfumesProps> = ({ sheetName, otherPerfum
         {otherPerfumes.map((product: PerfumeProps, index: number) => (
           <Link
             to={`/perfumes/${sheetName}/${product.id}`}
-            className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300"
+            className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300 active:translate-y-px"
             key={index}
           >
             <div className="w-full flex flex-col items-center justify-center">

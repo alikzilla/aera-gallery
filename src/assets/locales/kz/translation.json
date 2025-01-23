@@ -35,10 +35,12 @@
     "favorite_products": "Сіздің таңдаулы тауарларыңыз",
     "price": "Бағасы",
     "per_ml": "МЛ үшін",
-    "no_favorite_products": "Сізде таңдаулы тауарлар жоқ.",
+    "no_favorites": "Сізде таңдаулы тауарлар жоқ.",
     "total_cost": "Жалпы баға",
     "contact_via_whatsapp": "WhatsApp арқылы байланысу",
-    "clear_favorites": "Таңдаулыларды тазалау"
+    "clear_favorites": "Таңдаулыларды тазалау",
+    "remove": "Жою",
+    "buy": "Купить за {{total_cost}} KZT"
   },
   "about": {
     "title": "Компания туралы",
@@ -73,7 +75,9 @@
     "message": "Сәлеметсіз бе! Мен мына тауарға қызығамын: {{productName}}, құны: {{productCost}} KZT {{additionalInfo}}",
     "select_quantity": "Мөлшерді таңдаңыз (МЛ)",
     "price_per_ml": "1 МЛ үшін баға",
-    "per_ml_for": "{{ml}} МЛ үшін"
+    "per_ml_for": "{{ml}} МЛ үшін",
+    "add_to_favorites": "Таңдаулыларға қосу",
+    "remove_from_favorites": "Таңдаулылардан жою"
   },
   "navigation": {
     "home": "Басты бет",

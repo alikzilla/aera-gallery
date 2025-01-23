@@ -27,10 +27,8 @@ export const useFavoritesStore = create<FavoritesState>()(
     (set, get) => ({
       favorites: [],
 
-      // Add a perfume to favorites
       addToFavorites: (perfume) => {
         set((state) => {
-          // Avoid duplicates
           if (state.favorites.find((item) => item.id === perfume.id)) {
             return state;
           }
@@ -38,22 +36,21 @@ export const useFavoritesStore = create<FavoritesState>()(
         });
       },
 
-      // Remove a perfume from favorites by ID
       removeFromFavorites: (id) => {
         set((state) => ({
-          favorites: state.favorites.filter((perfume) => perfume.id !== id),
+          favorites: state.favorites.filter(
+            (perfume) => !(perfume.id === id)
+          ),
         }));
       },
 
-      // Clear the entire favorites list
       clearFavorites: () => {
         set(() => ({ favorites: [] }));
       },
 
-      // Check if a perfume is in the favorites list
       isFavorite: (id) => {
         return get().favorites.some((perfume) => perfume.id === id);
-      },
+      },     
     }),
     {
       name: "favorites-storage",

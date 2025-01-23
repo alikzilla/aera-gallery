@@ -19,12 +19,17 @@ const Footer = () => {
 
           {/* Social Media Links */}
           <nav className="flex items-center gap-3">
-            <Link to="https://www.instagram.com/aera.kz/" target="_blank">
+            <Link
+              to="https://www.instagram.com/aera.kz/"
+              target="_blank"
+              className="active:translate-y-px"
+            >
               <img src={instagramLogo} alt="Instagram" width={50} />
             </Link>
             <Link
               to="https://wa.me/message/5R657AQ5C3E7B1"
               target="_blank"
+              className="active:translate-y-px"
             >
               <img src={whatsappLogo} alt="WhatsApp" width={53} />
             </Link>

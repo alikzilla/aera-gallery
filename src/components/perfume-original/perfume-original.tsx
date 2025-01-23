@@ -32,6 +32,7 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
       removeFromFavorites(perfume.id);
     } else {
       addToFavorites(perfume);
+      console.log(perfume);
     }
   };
 
@@ -73,13 +74,13 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
           </h2>
         </div>
 
-        <div className="flex items-center gap-3 mt-5">
+        <div className="w-full flex flex-col md:flex-row items-center gap-3 mt-5">
           <Button
-            className={`w-full md:w-auto flex items-center justify-center gap-3 ${
+            className={`w-full flex items-center justify-center gap-3 ${
               isInFavorites
                 ? "bg-red-700 border-red-600"
                 : "bg-red-600 border-red-400"
-            } text-sm md:text-base text-white py-2 hover:bg-red-800`}
+            } text-sm md:text-base text-white py-2 hover:bg-red-800 active:translate-y-px`}
             onClick={toggleFavorite}
           >
             {isInFavorites
@@ -93,7 +94,7 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
           </Button>
 
           <Button
-            className="w-full md:w-auto flex items-center justify-center gap-3 bg-green-600 border-green-400 text-sm md:text-base text-white py-2 hover:bg-green-700"
+            className="w-full flex items-center justify-center gap-3 bg-green-600 border-green-400 text-sm md:text-base text-white py-2 hover:bg-green-800 hover:border-green-600 active:translate-y-px"
             onClick={whatsappMessage}
           >
             {t("product.contact_whatsapp")}

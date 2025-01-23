@@ -16,7 +16,7 @@ const Perfume = () => {
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
   const { id, sheetName } = useParams<{ id: string; sheetName: string }>();
-  const [product, setProduct] = useState<PerfumeProps | null>(null);
+  const [product, setProduct] = useState<PerfumeProps>();
   const [description, setDescription] = useState<string | undefined>("");
   const [otherPerfumes, setOtherPerfumes] = useState<PerfumeProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,6 +46,7 @@ const Perfume = () => {
             descriptionKz: row[5],
             country: row[6],
             volume: row[7],
+            type: sheetName,
           }));
 
           const foundProduct = perfumes.find(
