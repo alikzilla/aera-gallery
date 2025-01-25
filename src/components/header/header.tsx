@@ -6,7 +6,6 @@ import { Container, FavoritesWindow, LanguageSelector } from "../";
 import logo from "../../assets/logoM.png";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import axios from "axios";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,37 +27,31 @@ const Header: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleCreateOrder = async () => {
-    const sampleData = {
-      perfume_id: 1,
-      perfume_type: "Eau de Parfum",
-      client_name: "John Doe",
-      client_email: "john.doe@example.com",
-      client_phone: "+1234567890",
-      client_address: "123 Elm Street, Springfield",
-    };
+  // const handleCreateOrder = async () => {
+  //   const sampleData = {
+  //     perfume_id: 1,
+  //     perfume_type: "Eau de Parfum",
+  //     client_name: "John Doe",
+  //     client_email: "john.doe@example.com",
+  //     client_phone: "+1234567890",
+  //     client_address: "123 Elm Street, Springfield",
+  //   };
 
-    try {
-      const response = await axios.post("https://aera-admin.vercel.app/api/orders", sampleData);
-      console.log("Order created:", response.data);
-      alert("Order created successfully!");
-    } catch (error) {
-      console.error("Error creating order:", error);
-      alert("Failed to create order.");
-    }
-  };
+  //   try {
+  //     const response = await axios.post("https://aera-admin.vercel.app/api/orders", sampleData);
+  //     console.log("Order created:", response.data);
+  //     alert("Order created successfully!");
+  //   } catch (error) {
+  //     console.error("Error creating order:", error);
+  //     alert("Failed to create order.");
+  //   }
+  // };
 
   return (
     <header
       className={`w-full fixed z-10 h-[60px] transition-all duration-300 backdrop-blur-lg bg-white bg-opacity-80`}
     >
       <Container>
-        <button
-          onClick={handleCreateOrder}
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
-        >
-          Create Order
-        </button>
         <div className="h-full flex items-center justify-between relative">
           {/* Navbar */}
           <nav className="flex items-center gap-5 md:flex-row md:space-x-6 md:block hidden">
