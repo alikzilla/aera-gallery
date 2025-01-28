@@ -17,3 +17,4 @@ export { default as Breadcrumb } from "./breadcrumb/breadcrumb";
 export { default as PerfumeOriginal } from "./perfume-original/perfume-original";
 export { default as PerfumeSpilled } from "./perfume-spilled/perfume-spilled";
 export { default as FavoritesWindow } from "./perfume-favorites/perfume-favorites";
+export { default as OrderModal } from "./order-modal/order-modal";

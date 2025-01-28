@@ -12,3 +12,12 @@ export interface PerfumeProps {
   volume?: string;
   type?: string;
 }
+
+export interface IOrder {
+  client_name: string;
+  client_email: string;
+  client_phone: string;
+  client_address: string;
+  total_price: number;
+  perfumes: PerfumeProps[];
+}

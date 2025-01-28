@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useFavoritesStore } from "../../hooks/use-favorites-store";
 
-import Button from "../button/button";
+import { Button, OrderModal } from "..";
 
 import {
   HeartIcon,
@@ -23,7 +23,8 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
   handleCloseSidebar,
 }) => {
   const { t } = useTranslation();
-  const [showFavoriteWindow, setShowFavoriteWindow] = useState(false);
+  const [showFavoriteWindow, setShowFavoriteWindow] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { favorites, clearFavorites, removeFromFavorites } =
     useFavoritesStore();
 
@@ -94,23 +95,22 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
               favorites.map((perfume: PerfumeProps) => (
                 <div
                   key={perfume.id}
-                  className="flex justify-between items-center p-4 border rounded-lg shadow-sm"
+                  className="flex justify-between items-center gap-10 p-4 border rounded-lg shadow-sm"
                 >
                   <div className="flex items-center gap-4">
                     <img
                       src={perfume.url}
                       alt={perfume.name}
-                      className="w-auto h-12 rounded-lg object-cover"
+                      className="w-12 h-auto rounded-lg object-cover"
                     />
                     <div className="flex flex-col items-start">
-                      <div className="relative">
+                      <div className="relative text-left">
                         <Link
                           to={`/perfumes/${perfume.type}/${perfume.id}`}
                           onClick={() => setShowFavoriteWindow(false)}
-                          className="group font-semibold text-gray-800 active:text-yellow-600"
+                          className="inline-block font-semibold text-gray-800 transformation-all duration-200 hover:text-yellow-700 active:text-yellow-600"
                         >
                           {perfume.name}
-                          <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-yellow-600 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                         </Link>
                       </div>
 
@@ -136,21 +136,28 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
 
           {favorites.length > 0 && (
             <div className="flex flex-col items-center gap-3">
-              <Button className="w-full flex items-center justify-center gap-3 text-sm md:text-base py-2 active:translate-y-px">
-                <span className="flex items-center gap-1">
-                  {t("header.buy", { total_cost: totalCost })}
-                  <CreditCardIcon className="h-6 w-6" />
-                </span>
-              </Button>
-              <Button
-                className="w-full flex items-center justify-center gap-3 bg-green-600 border-green-400 text-sm md:text-base text-white py-2 hover:bg-green-800 hover:border-green-600 active:translate-y-px"
-                onClick={whatsappMessage}
-              >
-                <span className="flex items-center gap-1">
-                  {t("header.contact_via_whatsapp")}
-                  <img src={whatsapp} alt="whatsapp logo" width={24} />
-                </span>
-              </Button>
+              <div className="w-full flex items-center gap-3">
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                  className="w-full flex items-center justify-center gap-3 text-xs md:text-sm py-2 active:translate-y-px"
+                >
+                  <span className="flex items-center gap-1">
+                    {t("header.buy", { total_cost: totalCost })}
+                    <CreditCardIcon className="h-6 w-6" />
+                  </span>
+                </Button>
+
+                <Button
+                  className="w-full flex items-center justify-center gap-3 bg-green-600 border-green-400 text-xs md:text-sm text-white py-2 hover:bg-green-800 hover:border-green-600 active:translate-y-px"
+                  onClick={whatsappMessage}
+                >
+                  <span className="flex items-center gap-1">
+                    {t("header.contact_via_whatsapp")}
+                    <img src={whatsapp} alt="whatsapp logo" width={24} />
+                  </span>
+                </Button>
+              </div>
+
               <Button
                 className="w-full flex items-center justify-center gap-3 bg-red-600 border-red-400 text-sm md:text-base text-white py-2 hover:bg-red-800 hover:border-red-600 active:translate-y-px"
                 onClick={clearFavorites}
@@ -164,6 +171,13 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
           )}
         </div>
       </div>
+
+      <OrderModal
+        perfumes={favorites}
+        isOpen={isModalOpen}
+        total_price={totalCost}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 };
