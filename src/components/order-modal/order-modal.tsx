@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PerfumeProps } from "../../types/perfume";
 import axios from "axios";
+import { Button } from "..";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 interface OrderModalProps {
   perfumes: PerfumeProps[];
@@ -52,76 +54,87 @@ const OrderModal: React.FC<OrderModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed z-[50] top-0 bottom-0 left-0 right-0 w-screen h-screen bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-96">
-        <h2 className="text-xl font-bold mb-4">{t("Order Summary")}</h2>
+    <>
+      {isOpen && (
+        <div
+          className="fixed inset-0 h-screen bg-black bg-opacity-50 z-[50] overflow-hidden flex justify-center items-center"
+          onClick={onClose}
+        >
+          <div
+            className="bg-white rounded-lg p-6 w-[500px]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-xl text-left font-bold mb-4">
+              {t("order.order_window")}
+            </h2>
 
-        <div className="mb-4">
-          {perfumes.map((perfume) => (
-            <div
-              key={perfume.id}
-              className="flex justify-between items-center mb-2"
-            >
-              <span>
-                {t("Perfume")} #{perfume.id} ({t("Type")}: {perfume.type})
-              </span>
-              <span>${perfume.cost.toFixed(2)}</span>
+            <div className="mb-4">
+              {perfumes.map((perfume, index) => (
+                <div
+                  key={perfume.id}
+                  className="w-full flex justify-between items-center mb-2"
+                >
+                  <span className="text-left">
+                    {index + 1}) {perfume.name}
+                  </span>
+                  <span>{perfume.cost} KZT</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div className="flex justify-between items-center font-bold border-t pt-2 mb-4">
-          <span>{t("Total")}:</span>
-          <span>${total_price.toFixed(2)}</span>
-        </div>
+            <div className="flex justify-between items-center font-bold border-t pt-2 mb-4">
+              <span>{t("order.total")}:</span>
+              <span>{total_price} KZT</span>
+            </div>
 
-        <div className="mb-4">
-          <input
-            type="text"
-            className="w-full border rounded-lg p-2 mb-2"
-            placeholder={t("Your Name")}
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
-          />
-          <input
-            type="email"
-            className="w-full border rounded-lg p-2 mb-2"
-            placeholder={t("Your Email")}
-            value={clientEmail}
-            onChange={(e) => setClientEmail(e.target.value)}
-          />
-          <input
-            type="tel"
-            className="w-full border rounded-lg p-2 mb-2"
-            placeholder={t("Your Phone")}
-            value={clientPhone}
-            onChange={(e) => setClientPhone(e.target.value)}
-          />
-          <input
-            type="text"
-            className="w-full border rounded-lg p-2"
-            placeholder={t("Your Address")}
-            value={clientAddress}
-            onChange={(e) => setClientAddress(e.target.value)}
-          />
-        </div>
+            <div className="mb-4">
+              <input
+                type="text"
+                className="w-full border rounded-lg p-2 mb-2 outline-yellow-600"
+                placeholder={t("order.client_name")}
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+              />
+              <input
+                type="email"
+                className="w-full border rounded-lg p-2 mb-2 outline-yellow-600"
+                placeholder={t("order.client_email")}
+                value={clientEmail}
+                onChange={(e) => setClientEmail(e.target.value)}
+              />
+              <input
+                type="tel"
+                className="w-full border rounded-lg p-2 mb-2 outline-yellow-600"
+                placeholder={t("order.client_phone")}
+                value={clientPhone}
+                onChange={(e) => setClientPhone(e.target.value)}
+              />
+              <input
+                type="text"
+                className="w-full border rounded-lg p-2 mb-1 outline-yellow-600"
+                placeholder={t("order.client_address")}
+                value={clientAddress}
+                onChange={(e) => setClientAddress(e.target.value)}
+              />
+              <span className="flex items-center gap-1 mb-4">
+                <ExclamationCircleIcon className="w-5 h-5" />
+                {t("order.attention")}
+              </span>
+            </div>
 
-        <div className="flex justify-end space-x-2">
-          <button
-            className="bg-gray-300 text-gray-700 rounded-lg px-4 py-2"
-            onClick={onClose}
-          >
-            {t("Cancel")}
-          </button>
-          <button
-            className="bg-blue-500 text-white rounded-lg px-4 py-2"
-            onClick={handleConfirm}
-          >
-            {t("Confirm Order")}
-          </button>
+            <div className="flex justify-end space-x-2">
+              <Button
+                className="bg-gray-300 text-gray-700 hover:bg-red-700"
+                onClick={onClose}
+              >
+                {t("order.cancel")}
+              </Button>
+              <Button onClick={handleConfirm}>{t("order.submit")}</Button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

@@ -27,26 +27,6 @@ const Header: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  // const handleCreateOrder = async () => {
-  //   const sampleData = {
-  //     perfume_id: 1,
-  //     perfume_type: "Eau de Parfum",
-  //     client_name: "John Doe",
-  //     client_email: "john.doe@example.com",
-  //     client_phone: "+1234567890",
-  //     client_address: "123 Elm Street, Springfield",
-  //   };
-
-  //   try {
-  //     const response = await axios.post("https://aera-admin.vercel.app/api/orders", sampleData);
-  //     console.log("Order created:", response.data);
-  //     alert("Order created successfully!");
-  //   } catch (error) {
-  //     console.error("Error creating order:", error);
-  //     alert("Failed to create order.");
-  //   }
-  // };
-
   return (
     <header
       className={`w-full fixed z-10 h-[60px] transition-all duration-300 backdrop-blur-lg bg-white bg-opacity-80`}

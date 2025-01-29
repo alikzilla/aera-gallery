@@ -4,7 +4,7 @@ import { useFavoritesStore } from "../../hooks/use-favorites-store";
 import { Button } from "..";
 import { PerfumeProps } from "../../types/perfume";
 
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 import whatsapp from "../../assets/whatsapp.png";
@@ -29,7 +29,7 @@ const PerfumeSpilled: React.FC<IPerfumeOriginalProps> = ({
   handleMLSelection,
 }) => {
   const { t } = useTranslation();
-  const { favorites, addToFavorites, removeFromFavorites, isFavorite } =
+  const { addToFavorites, removeFromFavorites, isFavorite } =
     useFavoritesStore();
 
   const isInFavorites = isFavorite(perfume.id);
@@ -43,8 +43,6 @@ const PerfumeSpilled: React.FC<IPerfumeOriginalProps> = ({
         cost: totalPrice,
         volume: selectedML.toString(),
       });
-      console.log(perfume);
-      console.log(favorites);
     }
   };
 
@@ -114,6 +112,10 @@ const PerfumeSpilled: React.FC<IPerfumeOriginalProps> = ({
               ))}
             </div>
           </div>
+          <span className="flex items-center gap-1">
+            <ExclamationCircleIcon className="w-5 h-5" />
+            {t("product.attention")}
+          </span>
         </div>
         <div className="w-full flex flex-col md:flex-row items-center gap-3 mt-5">
           <Button

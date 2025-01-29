@@ -5,7 +5,7 @@ import { Button } from "..";
 import { PerfumeProps } from "../../types/perfume";
 
 import whatsapp from "../../assets/whatsapp.png";
-import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import { ExclamationCircleIcon, HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 
 interface IPerfumeOriginalProps {
@@ -32,7 +32,6 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
       removeFromFavorites(perfume.id);
     } else {
       addToFavorites(perfume);
-      console.log(perfume);
     }
   };
 
@@ -72,6 +71,11 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
           <h2 className="text-2xl font-semibold text-gray-900">
             {totalPrice} KZT
           </h2>
+
+          <span className="flex items-center gap-1">
+            <ExclamationCircleIcon className="w-5 h-5" />
+            {t("product.attention")}
+          </span>
         </div>
 
         <div className="w-full flex flex-col md:flex-row items-center gap-3 mt-5">

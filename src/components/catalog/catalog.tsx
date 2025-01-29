@@ -193,8 +193,6 @@ function Catalog() {
     }
   };
 
-  console.log(products);
-
   return (
     <section className="mb-5 pt-9" id="catalog">
       <Container>

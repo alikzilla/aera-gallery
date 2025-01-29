@@ -56,6 +56,11 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
 
   const totalCost = favorites.reduce((acc, fav) => acc + fav.cost, 0);
 
+  const handleBuyButton = () => {
+    setIsModalOpen(true);
+    setShowFavoriteWindow(false);
+  };
+
   return (
     <>
       <div className="relative">
@@ -63,6 +68,11 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
           className="h-7 w-7 cursor-pointer text-black transition-all duration-300 hover:text-red-500 active:translate-y-px"
           onClick={handleFavoriteWindowOpen}
         />
+        {favorites.length > 0 && (
+          <span className="absolute h-[17px] w-[17px] text-center text-white text-xs top-[-5px] right-[-5px] bg-red-500 rounded-full">
+            {favorites.length}
+          </span>
+        )}
       </div>
 
       {showFavoriteWindow && (
@@ -138,7 +148,7 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
             <div className="flex flex-col items-center gap-3">
               <div className="w-full flex items-center gap-3">
                 <Button
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => handleBuyButton()}
                   className="w-full flex items-center justify-center gap-3 text-xs md:text-sm py-2 active:translate-y-px"
                 >
                   <span className="flex items-center gap-1">
