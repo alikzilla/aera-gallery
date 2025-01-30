@@ -1,18 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-export interface PerfumeProps {
-  id: number;
-  name: string;
-  cost: number;
-  url: string;
-  unit?: string;
-  description?: string;
-  descriptionKz?: string;
-  country?: string;
-  volume?: string;
-  type?: string;
-}
+import { PerfumeProps } from "../types/perfume";
 
 interface FavoritesState {
   favorites: PerfumeProps[];
@@ -29,7 +17,7 @@ export const useFavoritesStore = create<FavoritesState>()(
 
       addToFavorites: (perfume) => {
         set((state) => {
-          if (state.favorites.find((item) => item.id === perfume.id)) {
+          if (state.favorites.find((item) => item.perfume_id === perfume.perfume_id)) {
             return state;
           }
           return { favorites: [...state.favorites, perfume] };
@@ -39,7 +27,7 @@ export const useFavoritesStore = create<FavoritesState>()(
       removeFromFavorites: (id) => {
         set((state) => ({
           favorites: state.favorites.filter(
-            (perfume) => !(perfume.id === id)
+            (perfume) => !(perfume.perfume_id === id)
           ),
         }));
       },
@@ -49,7 +37,7 @@ export const useFavoritesStore = create<FavoritesState>()(
       },
 
       isFavorite: (id) => {
-        return get().favorites.some((perfume) => perfume.id === id);
+        return get().favorites.some((perfume) => perfume.perfume_id === id);
       },     
     }),
     {

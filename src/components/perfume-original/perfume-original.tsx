@@ -5,7 +5,10 @@ import { Button } from "..";
 import { PerfumeProps } from "../../types/perfume";
 
 import whatsapp from "../../assets/whatsapp.png";
-import { ExclamationCircleIcon, HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import {
+  ExclamationCircleIcon,
+  HeartIcon as OutlineHeartIcon,
+} from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 
 interface IPerfumeOriginalProps {
@@ -25,11 +28,11 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
   const { addToFavorites, removeFromFavorites, isFavorite } =
     useFavoritesStore();
 
-  const isInFavorites = isFavorite(perfume.id);
+  const isInFavorites = isFavorite(perfume.perfume_id);
 
   const toggleFavorite = () => {
     if (isInFavorites) {
-      removeFromFavorites(perfume.id);
+      removeFromFavorites(perfume.perfume_id);
     } else {
       addToFavorites(perfume);
     }
@@ -43,8 +46,8 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
 
       <div className="w-full md:w-[35%] flex justify-center items-center p-5">
         <img
-          src={perfume.url}
-          alt={perfume.name}
+          src={perfume.perfume_url}
+          alt={perfume.perfume_name}
           className="w-auto h-[400px]"
         />
       </div>
@@ -52,32 +55,26 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
       <div className="w-full md:w-[65%] flex flex-col justify-between p-8 text-gray-700">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold text-gray-800 capitalize">
-            {perfume.name}
+            {perfume.perfume_name}
           </h1>
 
           <div className="flex items-center gap-5">
             <h2 className="bg-yellow-600 p-1 rounded-md text-md text-white">
-              {perfume.volume} МЛ
+              {perfume.perfume_volume} МЛ
             </h2>
           </div>
 
           <p className="text-lg leading-6 text-gray-500 mt-2">{description}</p>
           <div className="space-y-2 mt-2">
             <p>
-              <strong>{t("product.country")}:</strong> {perfume.country}
+              <strong>{t("product.country")}:</strong> {perfume.perfume_country}
             </p>
           </div>
 
           <h2 className="text-2xl font-semibold text-gray-900">
             {totalPrice} KZT
           </h2>
-
-          <span className="flex items-center gap-1">
-            <ExclamationCircleIcon className="w-5 h-5" />
-            {t("product.attention")}
-          </span>
         </div>
-
         <div className="w-full flex flex-col md:flex-row items-center gap-3 mt-5">
           <Button
             className={`w-full flex items-center justify-center gap-3 ${
@@ -105,6 +102,12 @@ const PerfumeOriginal: React.FC<IPerfumeOriginalProps> = ({
             <img src={whatsapp} alt="whatsapp logo" width={24} />
           </Button>
         </div>
+        <span className="flex items-start gap-2 mt-2">
+          <div className="w-5 h-5 flex items-center justify-center pt-2">
+            <ExclamationCircleIcon width={20} height={20} />
+          </div>
+          {t("product.attention")}
+        </span>
       </div>
     </div>
   );

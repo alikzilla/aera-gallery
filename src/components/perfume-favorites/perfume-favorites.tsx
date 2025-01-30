@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useFavoritesStore } from "../../hooks/use-favorites-store";
 
-import { Button, OrderModal } from "..";
+import { Button, OrderModal, SuccessModal } from "..";
 
 import {
   HeartIcon,
@@ -25,6 +25,8 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
   const { t } = useTranslation();
   const [showFavoriteWindow, setShowFavoriteWindow] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSuccessOpen, setIsSuccessOpen] = useState<boolean>(false);
+
   const { favorites, clearFavorites, removeFromFavorites } =
     useFavoritesStore();
 
@@ -42,9 +44,9 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
     const message = favorites
       .map(
         (product: PerfumeProps, index: number) =>
-          `${index + 1}. ${product.name} - ${product.cost} KZT ${
-            !product.volume ? t("header.per_ml") : ""
-          }`
+          `${index + 1}. ${product.perfume_name} - ${
+            product.perfume_cost
+          } KZT ${!product.perfume_volume ? t("header.per_ml") : ""}`
       )
       .join("\n");
     const finalMessage = `${t("header.greeting")}:\n${message}`;
@@ -54,7 +56,7 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
     window.open(whatsappUrl, "_blank");
   };
 
-  const totalCost = favorites.reduce((acc, fav) => acc + fav.cost, 0);
+  const totalCost = favorites.reduce((acc, fav) => acc + fav.perfume_cost, 0);
 
   const handleBuyButton = () => {
     setIsModalOpen(true);
@@ -102,36 +104,36 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
         <div className="p-6 w-full h-[90%] flex flex-col justify-between">
           <div className="space-y-4 overflow-y-auto">
             {favorites.length > 0 ? (
-              favorites.map((perfume: PerfumeProps) => (
+              favorites.map((perfume: PerfumeProps, index: number) => (
                 <div
-                  key={perfume.id}
+                  key={index}
                   className="flex justify-between items-center gap-10 p-4 border rounded-lg shadow-sm"
                 >
                   <div className="flex items-center gap-4">
                     <img
-                      src={perfume.url}
-                      alt={perfume.name}
+                      src={perfume.perfume_url}
+                      alt={perfume.perfume_name}
                       className="w-12 h-auto rounded-lg object-cover"
                     />
                     <div className="flex flex-col items-start">
                       <div className="relative text-left">
                         <Link
-                          to={`/perfumes/${perfume.type}/${perfume.id}`}
+                          to={`/perfumes/${perfume.perfume_type}/${perfume.perfume_id}`}
                           onClick={() => setShowFavoriteWindow(false)}
                           className="inline-block font-semibold text-gray-800 transformation-all duration-200 hover:text-yellow-700 active:text-yellow-600"
                         >
-                          {perfume.name}
+                          {perfume.perfume_name}
                         </Link>
                       </div>
 
                       <p className="text-sm text-gray-600">
-                        {perfume.cost} KZT - {perfume.volume} МЛ
+                        {perfume.perfume_cost} KZT - {perfume.perfume_volume} МЛ
                       </p>
                     </div>
                   </div>
                   <button
                     className="text-red-500 hover:text-red-700"
-                    onClick={() => removeFromFavorites(perfume.id)}
+                    onClick={() => removeFromFavorites(perfume.perfume_id)}
                   >
                     {t("header.remove")}
                   </button>
@@ -187,6 +189,12 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
         isOpen={isModalOpen}
         total_price={totalCost}
         onClose={() => setIsModalOpen(false)}
+        onSuccessOpen={() => setIsSuccessOpen(true)}
+      />
+
+      <SuccessModal
+        isOpen={isSuccessOpen}
+        onClose={() => setIsSuccessOpen(false)}
       />
     </>
   );

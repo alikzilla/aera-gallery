@@ -37,20 +37,20 @@ const Perfume = () => {
           const rows = data.values.slice(1);
 
           const perfumes = rows.map((row: string[], index: number) => ({
-            id: index + 1,
-            name: row[0],
-            unit: row[1],
-            cost: parseFloat(row[2]),
-            url: row[3],
-            description: row[4],
-            descriptionKz: row[5],
-            country: row[6],
-            volume: row[7],
-            type: sheetName,
+            perfume_id: index + 1,
+            perfume_name: row[0],
+            perfume_unit: row[1],
+            perfume_cost: parseFloat(row[2]),
+            perfume_url: row[3],
+            perfume_description: row[4],
+            perfume_descriptionKz: row[5],
+            perfume_country: row[6],
+            perfume_volume: row[7],
+            perfume_type: sheetName,
           }));
 
           const foundProduct = perfumes.find(
-            (perfume: PerfumeProps) => perfume.id === Number(id)
+            (perfume: PerfumeProps) => perfume.perfume_id === Number(id)
           );
 
           if (foundProduct) {
@@ -59,7 +59,9 @@ const Perfume = () => {
           }
 
           const randomPerfumes = perfumes
-            .filter((perfume: PerfumeProps) => perfume.id !== Number(id))
+            .filter(
+              (perfume: PerfumeProps) => perfume.perfume_id !== Number(id)
+            )
             .sort(() => 0.5 - Math.random())
             .slice(0, 5);
 
@@ -82,17 +84,19 @@ const Perfume = () => {
   useEffect(() => {
     if (product) {
       currentLanguage === "kz"
-        ? setDescription(product.descriptionKz)
-        : setDescription(product.description);
+        ? setDescription(product.perfume_descriptionKz)
+        : setDescription(product.perfume_description);
     }
   }, [currentLanguage, product]);
 
   const whatsappMessage = () => {
     const phoneNumber = "77780547007";
     const message = `Здравствуйте! Я заинтересован в товаре: ${
-      product?.name
-    }, стоимость: ${product?.cost} KZT ${
-      !product?.volume ? `за МЛ, выбранное количество: ${selectedML} МЛ.` : ``
+      product?.perfume_name
+    }, стоимость: ${product?.perfume_cost} KZT ${
+      !product?.perfume_volume
+        ? `за МЛ, выбранное количество: ${selectedML} МЛ.`
+        : ``
     }`;
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
@@ -118,15 +122,15 @@ const Perfume = () => {
     );
   }
 
-  const totalPrice = product.cost * selectedML;
-  const pricePerML = product.cost;
+  const totalPrice = product.perfume_cost * selectedML;
+  const pricePerML = product.perfume_cost;
 
   return (
     <div className="py-[30px]">
       <Container>
-        <Breadcrumb name={product.name} />
+        <Breadcrumb name={product.perfume_name} />
 
-        {product.volume ? (
+        {product.perfume_volume ? (
           <PerfumeOriginal
             perfume={product}
             description={description}

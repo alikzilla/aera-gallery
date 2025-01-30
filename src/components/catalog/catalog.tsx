@@ -46,16 +46,16 @@ function Catalog() {
           const rows = data.values.slice(1);
           const formattedProducts: PerfumeProps[] = rows.map(
             (row: string[], index: number) => ({
-              id: index + 1,
-              name: row[0],
-              unit: row[1],
-              cost: parseFloat(row[2]),
-              url: row[3],
-              description: row[4],
-              descriptionKz: row[5],
-              country: row[6],
-              volume: row[7],
-              type: sheetname,
+              perfume_id: index + 1,
+              perfume_name: row[0],
+              perfume_unit: row[1],
+              perfume_cost: parseFloat(row[2]),
+              perfume_url: row[3],
+              perfume_description: row[4],
+              perfume_descriptionKz: row[5],
+              perfume_country: row[6],
+              perfume_volume: row[7],
+              perfume_type: sheetname,
             })
           );
           setProducts(formattedProducts);
@@ -71,6 +71,8 @@ function Catalog() {
   }, [sheetname]);
 
   const getBrandFromName = (name: string) => {
+    if (!name) return ""; // Ensure name is defined and not an empty string
+
     const brandPrefix = name.split(" ")[0];
     switch (brandPrefix) {
       case "Al":
@@ -131,31 +133,32 @@ function Catalog() {
   };
 
   const filteredProducts = products.filter((product) => {
+    const name = product.perfume_name || "";
     const matchesBrand = selectedBrand
-      ? getBrandFromName(product.name.toLowerCase()) ===
-        selectedBrand.toLowerCase()
+      ? getBrandFromName(name.toLowerCase()) === selectedBrand.toLowerCase()
       : true;
-    const matchesSearchQuery = product.name
+    const matchesSearchQuery = name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-
-    if (selectedBrand === "Все бренды" || selectedBrand === "Барлық брендтер") {
-      return products && matchesSearchQuery;
-    }
 
     return matchesBrand && matchesSearchQuery;
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const nameA = a.perfume_name || "";
+    const nameB = b.perfume_name || "";
+    const costA = a.perfume_cost || 0;
+    const costB = b.perfume_cost || 0;
+
     switch (sortOption) {
       case "name-asc":
-        return a.name.localeCompare(b.name);
+        return nameA.localeCompare(nameB);
       case "name-desc":
-        return b.name.localeCompare(a.name);
+        return nameB.localeCompare(nameA);
       case "price-asc":
-        return a.cost - b.cost;
+        return costA - costB;
       case "price-desc":
-        return b.cost - a.cost;
+        return costB - costA;
       default:
         return 0;
     }
@@ -168,7 +171,7 @@ function Catalog() {
   );
 
   const brands = Array.from(
-    new Set(products.map((product) => getBrandFromName(product.name)))
+    new Set(products.map((product) => getBrandFromName(product.perfume_name)))
   );
 
   const handlePageChange = (page: number) => {

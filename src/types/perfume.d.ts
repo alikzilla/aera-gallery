@@ -1,16 +1,16 @@
 export {};
 
 export interface PerfumeProps {
-  id: number;
-  name: string;
-  cost: number;
-  url: string;
-  unit?: string;
-  description?: string;
-  descriptionKz?: string;
-  country?: string;
-  volume?: string;
-  type?: string;
+  perfume_id: number;
+  perfume_name: string;
+  perfume_cost: number;
+  perfume_url: string;
+  perfume_unit?: string;
+  perfume_description?: string;
+  perfume_descriptionKz?: string;
+  perfume_country?: string;
+  perfume_volume?: string;
+  perfume_type?: string;
 }
 
 export interface IOrder {
