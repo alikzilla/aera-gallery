@@ -14,11 +14,11 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 h-screen flex items-center justify-center bg-black bg-opacity-50 z-50"
+      className="fixed inset-0 h-screen flex items-center justify-center bg-black bg-opacity-50 z-50 px-4"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg p-6 w-96 shadow-lg text-center"
+        className="bg-white rounded-lg p-6 w-full max-w-sm shadow-lg text-center"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-bold mb-4">{t("order.congratulations")}</h2>

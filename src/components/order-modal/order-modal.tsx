@@ -34,7 +34,6 @@ const OrderModal: React.FC<OrderModalProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const { clearFavorites } = useFavoritesStore();
-
   const playerRef = useRef<Player>(null);
 
   useEffect(() => {
@@ -46,9 +45,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
       alert(t("order.please_fill_all_fields"));
       return;
     }
-
     setLoading(true);
-
     try {
       const order = await axios.post(
         "https://aera-admin.vercel.app/api/orders",
@@ -76,22 +73,22 @@ const OrderModal: React.FC<OrderModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 h-screen bg-black bg-opacity-50 z-[50] overflow-hidden flex justify-center items-center"
+      className="fixed inset-0 h-screen bg-black bg-opacity-50 z-[50] overflow-hidden flex justify-center items-center p-4 sm:p-6"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg p-6 w-[500px]"
+        className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-lg md:max-w-xl lg:max-w-2xl mx-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl text-left font-bold mb-4">
           {t("order.order_window")}
         </h2>
 
-        <div className="mb-4">
+        <div className="mb-4 max-h-60 overflow-y-auto">
           {perfumes.map((perfume, index) => (
             <div
               key={perfume.perfume_id}
-              className="w-full flex justify-between items-center mb-2"
+              className="flex justify-between items-center mb-2"
             >
               <span className="text-left">
                 {index + 1}) {perfume.perfume_name}
@@ -106,17 +103,17 @@ const OrderModal: React.FC<OrderModalProps> = ({
           <span>{total_price} KZT</span>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 space-y-2">
           <input
             type="text"
-            className="w-full border rounded-lg p-2 mb-2 outline-yellow-600"
+            className="w-full border rounded-lg p-2 outline-yellow-600"
             placeholder={t("order.client_name")}
             value={clientName}
             onChange={(e) => setClientName(e.target.value)}
           />
           <input
             type="email"
-            className="w-full border rounded-lg p-2 mb-2 outline-yellow-600"
+            className="w-full border rounded-lg p-2 outline-yellow-600"
             placeholder={t("order.client_email")}
             value={clientEmail}
             onChange={(e) => setClientEmail(e.target.value)}
@@ -124,14 +121,14 @@ const OrderModal: React.FC<OrderModalProps> = ({
           <InputMask
             mask="+7 (___) ___-__-__"
             replacement={{ _: /\d/ }}
-            className="w-full border rounded-lg p-2 mb-2 outline-yellow-600"
+            className="w-full border rounded-lg p-2 outline-yellow-600"
             placeholder={t("order.client_phone")}
             value={clientPhone}
             onChange={(e) => setClientPhone(e.target.value)}
           />
           <input
             type="text"
-            className="w-full border rounded-lg p-2 mb-2 outline-yellow-600"
+            className="w-full border rounded-lg p-2 outline-yellow-600"
             placeholder={t("order.client_address")}
             value={clientAddress}
             onChange={(e) => setClientAddress(e.target.value)}
@@ -144,9 +141,9 @@ const OrderModal: React.FC<OrderModalProps> = ({
           </span>
         </div>
 
-        <div className="flex justify-end space-x-2">
+        <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
           <Button
-            className="bg-gray-300 text-gray-700 hover:bg-red-700"
+            className="bg-gray-300 text-gray-700 hover:bg-red-700 w-full sm:w-auto"
             onClick={onClose}
             disabled={loading}
           >
@@ -155,7 +152,7 @@ const OrderModal: React.FC<OrderModalProps> = ({
           <Button
             onClick={handleConfirm}
             disabled={loading}
-            className="relative flex items-center justify-center w-[150px]"
+            className="relative flex items-center justify-center w-full sm:w-[150px]"
           >
             {loading ? (
               <Player
