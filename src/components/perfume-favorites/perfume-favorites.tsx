@@ -36,7 +36,7 @@ const PerfumeFavorites: React.FC<IPerfumeFavoritesProps> = ({
   };
 
   const whatsappMessage = () => {
-    const phoneNumber = "77780547007";
+    const phoneNumber = "77760547007";
     if (favorites.length === 0) {
       alert(t("header.empty_favorites"));
       return;

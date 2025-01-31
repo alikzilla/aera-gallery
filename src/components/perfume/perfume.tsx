@@ -90,7 +90,7 @@ const Perfume = () => {
   }, [currentLanguage, product]);
 
   const whatsappMessage = () => {
-    const phoneNumber = "77780547007";
+    const phoneNumber = "77760547007";
     const message = `Здравствуйте! Я заинтересован в товаре: ${
       product?.perfume_name
     }, стоимость: ${product?.perfume_cost} KZT ${
