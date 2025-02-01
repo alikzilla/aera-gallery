@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+# Aera.kz - Perfume Shop React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+Aera.kz is an online perfume shop built using React. This project was developed specifically for the Aera perfume shop to provide an easy-to-use online shopping experience. Users can browse a catalog of perfumes, view detailed descriptions, save favorite items, and place orders. The app supports multiple languages and allows direct communication via WhatsApp.
 
-## Available Scripts
+## Features
+- **Catalog of Perfumes** – Browse through a variety of perfumes.
+- **Single Perfume Page** – View detailed descriptions and save items to favorites using Zustand.
+- **Multi-language Support** – Implemented with the i18n library.
+- **Favorites Functionality** – Users can save perfumes to their favorites.
+- **Contact via WhatsApp** – Direct messaging link for customer support.
+- **About and Contact Pages** – Informational pages about the store.
+- **Order System** – Clients can place an order, after which managers will contact them via the admin panel.
 
-In the project directory, you can run:
+## Tech Stack
+- **React** – Core library for building the application.
+- **React Router & React Router DOM** – Navigation and routing.
+- **TypeScript** - Provides static type checking, improving code reliability and maintainability.
+- **Tailwind** - Utility-first CSS framework for efficient and responsive styling.
+- **Zustand** – State management for handling favorites.
+- **Axios** – Handling API requests.
+- **Heroicons** – Icons for the UI.
+- **i18n** – Multi-language support.
 
-### `npm start`
+## Installation & Setup
+To run the project locally, follow these steps:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repository/aera-gallery.git
+   ```
+2. Navigate to the project folder:
+   ```sh
+   cd aera-gallery
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Start the development server:
+   ```sh
+   npm run start
+   ```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Deployment
+This project can deployed using Github pages, but also you can deploy it using platforms like Vercel or Netlify. Ensure all necessary environment variables and API endpoints are configured correctly before deployment.
 
-### `npm test`
+## Contribution
+If you’d like to contribute, feel free to fork the repository and create a pull request with improvements.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contact
+For any inquiries, visit our [website](https://aera.kz) or contact us via WhatsApp through the app.
