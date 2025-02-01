@@ -27,7 +27,7 @@ To run the project locally, follow these steps:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repository/aera-gallery.git
+   git clone https://github.com/alikzilla/aera-gallery.git
    ```
 2. Navigate to the project folder:
    ```sh
