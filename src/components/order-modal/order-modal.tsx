@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PerfumeProps } from "../../types/perfume";
 import axios from "axios";
@@ -6,9 +6,6 @@ import { Button } from "..";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { InputMask } from "@react-input/mask";
 import { useFavoritesStore } from "../../hooks/use-favorites-store";
-import { Player } from "@lordicon/react";
-
-const ICON = require("../../assets/system-regular-716-spinner-three-dots-hover-trapdoor.json");
 
 interface OrderModalProps {
   perfumes: PerfumeProps[];
@@ -34,11 +31,6 @@ const OrderModal: React.FC<OrderModalProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const { clearFavorites } = useFavoritesStore();
-  const playerRef = useRef<Player>(null);
-
-  useEffect(() => {
-    playerRef.current?.playFromBeginning();
-  }, []);
 
   const handleConfirm = async () => {
     if (!clientName || !clientEmail || !clientPhone || !clientAddress) {
@@ -152,17 +144,9 @@ const OrderModal: React.FC<OrderModalProps> = ({
           <Button
             onClick={handleConfirm}
             disabled={loading}
-            className="relative flex items-center justify-center w-full sm:w-[150px]"
+            className="relative flex items-center justify-center"
           >
-            {loading ? (
-              <Player
-                ref={playerRef}
-                icon={ICON}
-                onComplete={() => playerRef.current?.playFromBeginning()}
-              />
-            ) : (
-              t("order.submit")
-            )}
+            {loading ? t("order.loading") : t("order.submit")}
           </Button>
         </div>
       </div>
