@@ -10,18 +10,18 @@ function classNames(...classes: string[]) {
 let countries = [
   {
     code: "kz",
-    name: "Қазақша", // Changed to the correct native name for Kazakh
-    country_code: "kz", // Flag for Kazakhstan
+    name: "Қазақша",
+    country_code: "kz",
   },
   {
     code: "ru",
-    name: "Русский", // Russian
-    country_code: "ru", // Flag for Russia
+    name: "Русский",
+    country_code: "ru",
   },
 ];
 
 const LanguageSelector = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   return (
     <div>
