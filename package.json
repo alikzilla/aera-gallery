@@ -67,6 +67,7 @@
     ]
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.20",
     "autoprefixer": "^10.4.20",
     "gh-pages": "^6.3.0",
     "postcss": "^8.4.49",

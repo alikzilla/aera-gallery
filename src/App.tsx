@@ -2,16 +2,14 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { Homepage, AboutPage, ContactsPage, PerfumePage } from "./pages";
 import { Header, Footer } from "./components";
 import { useEffect } from "react";
-import ReactGA from 'react-ga';
-
-const TRACKING_ID = 'G-X909Q8GMF9';
-ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const location = useLocation();
 
   useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search);
+    gtag('event', 'page_view', {
+      page_path: location.pathname + location.search,
+    });
   }, [location]);
 
   return (
