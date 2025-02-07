@@ -53,12 +53,20 @@ const OrderModal: React.FC<OrderModalProps> = ({
       console.log(order);
       onClose();
       clearFavorites();
+      clearClientData();
       onSuccessOpen();
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const clearClientData = () => {
+    setClientName("");
+    setClientPhone("");
+    setClientEmail("");
+    setClientAddress("");
   };
 
   if (!isOpen) return null;
