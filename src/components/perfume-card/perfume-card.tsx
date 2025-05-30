@@ -10,26 +10,42 @@ interface IPerfumeCardProps {
 
 const PerfumeCard: React.FC<IPerfumeCardProps> = ({ perfume, sheetname }) => {
   const { t } = useTranslation();
+  const isAvailable = perfume.perfume_isAvailable === 1;
 
   return (
     <Link
       to={`/perfumes/${sheetname}/${perfume.perfume_id}`}
-      className="relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300 active:translate-y-px"
+      className={`relative group flex flex-col items-start justify-between border border-gray-300 rounded-lg p-4 bg-white relative shadow-sm hover:shadow-lg transition-shadow duration-300 active:translate-y-px ${
+        !isAvailable ? "opacity-80" : ""
+      }`}
     >
       <div className="w-full flex flex-col items-center justify-center">
-        <img
-          src={perfume.perfume_url}
-          alt={perfume.perfume_name}
-          className="h-[300px] rounded-md mb-4"
-        />
+        <div className="relative">
+          <img
+            src={perfume.perfume_url}
+            alt={perfume.perfume_name}
+            className={`h-[300px] rounded-md mb-4 ${
+              !isAvailable ? "filter grayscale" : ""
+            }`}
+          />
+          {!isAvailable && (
+            <div className="absolute inset-0 bg-black bg-opacity-20 rounded-md"></div>
+          )}
+        </div>
         <h3 className="w-full text-lg text-left font-semibold">
-          {t(`products.${perfume.perfume_name}`, perfume.perfume_name)}{" "}
-          {/* Translates product names */}
+          {t(`products.${perfume.perfume_name}`, perfume.perfume_name)}
         </h3>
       </div>
 
-      <div className="absolute top-0 left-2 flex items-center gap-5 mt-2">
-        <h2 className="bg-yellow-600 py-1 px-2 rounded-md text-white">
+      <div className="absolute top-0 left-2 flex flex-col items-start gap-1 mt-2">
+        <h2
+          className={`py-0.5 px-1.5 rounded-md text-white ${
+            isAvailable ? "bg-green-600" : "bg-red-600"
+          }`}
+        >
+          {isAvailable ? t("catalog.in_stock") : t("catalog.out_of_stock")}
+        </h2>
+        <h2 className="bg-yellow-600 py-0.5 px-1.5 rounded-md text-white">
           {perfume.perfume_volume} {t("catalog.ml")}
         </h2>
       </div>

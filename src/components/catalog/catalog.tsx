@@ -36,7 +36,7 @@ function Catalog() {
     const fetchProducts = async () => {
       const sheetId = "1qD8BK7B51Ye-UzCbEFE5QCQrgE5od6dyniFDtUwXJiw";
       const apiKey = "AIzaSyAeeWYFcj-knuSe2xTNT5UYyLWyzr4hVKI";
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetname}!A1:H?key=${apiKey}`;
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetname}!A1:J?key=${apiKey}`;
 
       try {
         const response = await fetch(url);
@@ -55,9 +55,12 @@ function Catalog() {
               perfume_descriptionKz: row[5],
               perfume_country: row[6],
               perfume_volume: row[7],
+              perfume_brand: row[8],
+              perfume_isAvailable: Number(row[9]),
               perfume_type: sheetname,
             })
           );
+
           setProducts(formattedProducts);
         }
       } catch (error) {
@@ -70,8 +73,10 @@ function Catalog() {
     fetchProducts();
   }, [sheetname]);
 
+  console.log(products);
+
   const getBrandFromName = (name: string) => {
-    if (!name) return ""; // Ensure name is defined and not an empty string
+    if (!name) return "";
 
     const brandPrefix = name.split(" ")[0];
     switch (brandPrefix) {
@@ -145,6 +150,13 @@ function Catalog() {
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const availabilityA = a.perfume_isAvailable ?? 0;
+    const availabilityB = b.perfume_isAvailable ?? 0;
+
+    if (availabilityA !== availabilityB) {
+      return availabilityB - availabilityA;
+    }
+
     const nameA = a.perfume_name || "";
     const nameB = b.perfume_name || "";
     const costA = a.perfume_cost || 0;
@@ -165,6 +177,7 @@ function Catalog() {
   });
 
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+
   const currentProducts = sortedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage

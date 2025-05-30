@@ -25,7 +25,7 @@ const Perfume = () => {
   useEffect(() => {
     const sheetId = "1qD8BK7B51Ye-UzCbEFE5QCQrgE5od6dyniFDtUwXJiw";
     const apiKey = "AIzaSyAeeWYFcj-knuSe2xTNT5UYyLWyzr4hVKI";
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A1:H?key=${apiKey}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A1:J?key=${apiKey}`;
 
     const fetchProduct = async () => {
       setLoading(true);
@@ -46,6 +46,8 @@ const Perfume = () => {
             perfume_descriptionKz: row[5],
             perfume_country: row[6],
             perfume_volume: row[7],
+            perfume_brand: row[8],
+            perfume_isAvailable: Number(row[9]),
             perfume_type: sheetName,
           }));
 

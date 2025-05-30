@@ -10,6 +10,8 @@ export interface PerfumeProps {
   perfume_descriptionKz?: string;
   perfume_country?: string;
   perfume_volume?: string;
+  perfume_isAvailable?: number;
+  perfume_brand?: string;
   perfume_type?: string;
 }
 
