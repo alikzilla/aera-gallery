@@ -45,9 +45,11 @@ const PerfumeCard: React.FC<IPerfumeCardProps> = ({ perfume, sheetname }) => {
         >
           {isAvailable ? t("catalog.in_stock") : t("catalog.out_of_stock")}
         </h2>
-        <h2 className="bg-yellow-600 py-0.5 px-1.5 rounded-md text-white">
-          {perfume.perfume_volume} {t("catalog.ml")}
-        </h2>
+        {perfume.perfume_type === "original" && (
+          <h2 className="bg-yellow-600 py-0.5 px-1.5 rounded-md text-white">
+            {perfume.perfume_volume} {t("catalog.ml")}
+          </h2>
+        )}
       </div>
 
       <div>

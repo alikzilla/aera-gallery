@@ -150,11 +150,11 @@ function Catalog() {
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    const availabilityA = a.perfume_isAvailable ?? 0;
-    const availabilityB = b.perfume_isAvailable ?? 0;
+    const isAvailableA = a.perfume_isAvailable === 1;
+    const isAvailableB = b.perfume_isAvailable === 1;
 
-    if (availabilityA !== availabilityB) {
-      return availabilityB - availabilityA;
+    if (isAvailableA !== isAvailableB) {
+      return isAvailableA ? -1 : 1;
     }
 
     const nameA = a.perfume_name || "";

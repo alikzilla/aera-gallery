@@ -132,7 +132,7 @@ const Perfume = () => {
       <Container>
         <Breadcrumb name={product.perfume_name} />
 
-        {product.perfume_volume ? (
+        {product.perfume_type === "original" ? (
           <PerfumeOriginal
             perfume={product}
             description={description}

@@ -47,6 +47,9 @@ const PerfumeSpilled: React.FC<IPerfumeOriginalProps> = ({
     }
   };
 
+  // Available volume options for spilled perfumes
+  const volumeOptions = [15, 30, 45];
+
   return (
     <div
       className={`relative min-h-[400px] flex flex-col md:flex-row items-start justify-between bg-white rounded-xl shadow-lg overflow-hidden mb-10 ${
@@ -105,7 +108,7 @@ const PerfumeSpilled: React.FC<IPerfumeOriginalProps> = ({
               <div>
                 <strong>{t("product.select_quantity")}:</strong>
                 <div className="flex gap-4 mt-2">
-                  {[1, 10, 15, 20, 30].map((ml) => (
+                  {volumeOptions.map((ml) => (
                     <label
                       key={ml}
                       className="flex flex-wrap items-center gap-2 cursor-pointer group relative"
@@ -150,6 +153,7 @@ const PerfumeSpilled: React.FC<IPerfumeOriginalProps> = ({
                     : "bg-red-600 border-red-400"
                 } text-sm md:text-base text-white py-2 hover:bg-red-800 active:translate-y-px`}
                 onClick={toggleFavorite}
+                disabled={selectedML === 1}
               >
                 {isInFavorites
                   ? t("product.remove_from_favorites")
