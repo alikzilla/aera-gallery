@@ -48,7 +48,7 @@ const PerfumeSpilled: React.FC<IPerfumeOriginalProps> = ({
   };
 
   // Available volume options for spilled perfumes
-  const volumeOptions = [15, 30, 45];
+  const volumeOptions = [15, 20, 30];
 
   return (
     <div
